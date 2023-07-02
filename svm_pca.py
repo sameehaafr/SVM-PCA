@@ -237,6 +237,7 @@ def main():
         st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2)) 
         show_confusion_matrix(model, X_test_scaled, y_test)
     
+    st.title('SVM for Classifying Tumors')
     st.caption('The objective of this project is to build an SVM model that can classify tumor characteristics as either Malignant (non-cancerous) or Benign (cancerous). The data used for this project was obtained from the UC Irvine Machine Learning Repository: https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic')
     st.caption('The code for this project can be found here: https://github.com/sameehaafr/SVM-PCA')
 
