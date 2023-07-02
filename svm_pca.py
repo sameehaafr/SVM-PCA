@@ -56,6 +56,7 @@ def evaluate_svm(clf_svm, X_test_scaled, y_test):
     return confusion_matrix(y_test, clf_svm.predict(X_test_scaled))
 
 def show_confusion_matrix(clf_svm, X_test_scaled, y_test):
+    class_labels = ['Malignant', 'Benign']
     cm = confusion_matrix(y_test, clf_svm.predict(X_test_scaled))
     fig, ax = plt.subplots(figsize=(8, 6))
     sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False,
