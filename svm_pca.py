@@ -154,7 +154,7 @@ X_train_scaled, X_test_scaled, y_train, y_test = split_data(df) #returns X_train
 st.markdown('## Basic SVM Model')
 clf_svm = build_basic_svm(X_train_scaled, y_train)
 st.caption("Default SVM Parameters: C = 1.0, gamma = 'scale', kernel = 'rbf'")
-cm = confusion_matrix(y_test, clf_svm.predict(X_test_scaled), labels=['Malignant', 'Benign'])
+cm = confusion_matrix(y_test, clf_svm.predict(X_test_scaled))
 ConfusionMatrixDisplay(cm, X_test_scaled, display_labels=['Malignant', 'Benign'])
 st.pyplot()
 #confusion_matrix = evaluate_svm(clf_svm, X_test_scaled, y_test)
