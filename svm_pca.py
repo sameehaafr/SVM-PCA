@@ -146,7 +146,7 @@ confusion_matrix = evaluate_svm(clf_svm, X_test_scaled, y_test) #returns confusi
 c, gamma, kernel = find_best_params(X_train_scaled, y_train) #returns c, gamma, kernel
 
 # Build the model with the optimal parameters
-clf_svm = SVC(C=c, gamma=gamma, kernel=kernel, X_train_scaled, y_train) #returns clf_svm
+clf_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train) #returns clf_svm
 confusion_matrix = evaluate_svm(clf_svm, X_test_scaled, y_test) #returns confusion matrix
 
 scree_plot = scree_plot(X_train_scaled) #returns scree plot
