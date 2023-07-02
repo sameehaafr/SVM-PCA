@@ -159,6 +159,7 @@ st.header('SVM Model with Optimal Parameters')
 st.caption('Optimal Parameters: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
 clf_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train)
 st.subheader('Confusion Matrix and Metrics for SVM with Optimal Parameters')
+accuracy = clf_svm.score(X_test_scaled, y_test)
 y_pred = clf_svm.predict(X_test_scaled)
 class_names = ['Malignant', 'Benign']
 st.write("Accuracy: ", accuracy.round(2))
