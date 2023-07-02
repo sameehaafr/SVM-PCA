@@ -86,20 +86,6 @@ def find_best_params(X_train_scaled, y_train):
 
     return c, gamma, kernel
 
-# # Plot Scree Plot - PCA to reduce the number of features
-# def scree_plot(X_train_scaled):
-#     pca = PCA().fit(X_train_scaled)
-#     #X_train_pca = pca.fit_transform(X_train_scaled)
-#     per_var = np.round(pca.explained_variance_ratio_*100, decimals=1)
-#     #labels = [str(x) for x in range(1, len(per_var)+1)]
-
-#     fig = plt.bar(x=range(1, len(per_var)+1), height=per_var)
-#     plt.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
-#     plt.ylabel('Percentage of Explained Variance')
-#     plt.xlabel('Principal Component')
-#     plt.title('Scree Plot')
-#     return plt.show()
-
 def scree_plot(X_train_scaled):
     pca = PCA().fit(X_train_scaled)
     per_var = np.round(pca.explained_variance_ratio_ * 100, decimals=1)
@@ -114,7 +100,7 @@ def scree_plot(X_train_scaled):
 
 # Build the model with the optimal parameters and the reduced number of features
 def pca(X_train_scaled, X_test_scaled, y_train):
-    pca = PCA(n_components = 2)
+    pca = PCA().fit(X_train_scaled)
 
     X_train_pca = pca.fit_transform(X_train_scaled)
     X_test_pca = pca.transform(X_test_scaled)
@@ -187,14 +173,15 @@ st.header('Plotting Scree Plot - PCA to reduce the number of features')
 #scree_plot = scree_plot(X_train_scaled) #returns scree plot
 fig = scree_plot(X_train_scaled)
 st.pyplot(fig)
-# c, gamma, kernel, X_train_pca, X_test_pca = pca(X_train_scaled, X_test_scaled, y_train) #returns c, gamma, kernel, X_train_pca, X_test_pca
-# st.caption('Optimal Parameters determined by PCA: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
 
-# # Build the model with the optimal parameters and the reduced number of features
-# clf_svm_pca = build_svm(c, gamma, kernel, X_train_pca, y_train)
-# accuracy = clf_svm.score(X_test_scaled, y_test)
-# y_pred = clf_svm.predict(X_test_scaled)
-# class_names = ['Malignant', 'Benign']
-# st.write("Accuracy: ", accuracy.round(2))
-# st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
-# st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2)) 
+c, gamma, kernel, X_train_pca, X_test_pca = pca(X_train_scaled, X_test_scaled, y_train)
+
+# Build the model with the optimal parameters and the reduced number of features
+st.caption('Optimal Parameters determined by PCA: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
+clf_svm_pca = build_svm(c, gamma, kernel, X_train_pca, y_train)
+accuracy = clf_svm.score(X_test_scaled, y_test)
+y_pred = clf_svm.predict(X_test_scaled)
+class_names = ['Malignant', 'Benign']
+st.write("Accuracy: ", accuracy.round(2))
+st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
+st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2)) 
