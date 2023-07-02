@@ -196,8 +196,8 @@ def main():
     
     st.sidebar.button('Submit', key='submit')
     if(st.sidebar.button('Submit')):
-        clf_svm_pca.predict([[radius, texture, perimeter, area, smoothness, compactness, concavity, concave_points, symmetry, fractal_dimension]])
-        if clf_svm_pca.predict([[radius, texture, perimeter, area, smoothness, compactness, concavity, concave_points, symmetry, fractal_dimension]]) == 0:
+        prediction = opt_svm.predict([[radius, texture, perimeter, area, smoothness, compactness, concavity, concave_points, symmetry, fractal_dimension]])
+        if prediction == 0:
             st.write('The tumor is: Malignant (Non-Cancerous)')
         else:
             st.write('The tumor is: Benign (Cancerous)')
