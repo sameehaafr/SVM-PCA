@@ -12,7 +12,7 @@ from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
 from sklearn.decomposition import PCA
 from sklearn.metrics import confusion_matrix, classification_report
-from sklearn.metrics import plot_confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import ConfusionMatrixDisplay
 
 # Load the data
 
