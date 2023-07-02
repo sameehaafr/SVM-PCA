@@ -108,11 +108,11 @@ def scree_plot(X_train_scaled):
     return plt.show()
 
 # Build the model with the optimal parameters and the reduced number of features
-def pca():
+def pca(X_train_scaled, X_test_scaled, y_train):
     pca = PCA(n_components = 2)
 
-    X_train_pca = pca.fit_transform(X_train)
-    X_test_pca = pca.transform(X_test)
+    X_train_pca = pca.fit_transform(X_train_scaled)
+    X_test_pca = pca.transform(X_test_scaled)
 
     param_grid = [
         {'C': [0.5, 1, 10, 100],
@@ -175,9 +175,10 @@ clf_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train)
 st.markdown('## Confusion Matrix')
 show_confusion_matrix(clf_svm, X_test_scaled, y_test)
 
-# scree_plot = scree_plot(X_train_scaled) #returns scree plot
-# c, gamma, kernel, X_train_pca, X_test_pca = pca() #returns c, gamma, kernel, X_train_pca, X_test_pca
-
+# Plot Scree Plot - PCA to reduce the number of features
+scree_plot = scree_plot(X_train_scaled) #returns scree plot
+c, gamma, kernel, X_train_pca, X_test_pca = pca(X_train_scaled, X_test_scaled, y_train) #returns c, gamma, kernel, X_train_pca, X_test_pca
+st.caption('Parameters: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
 # # Build the model with the optimal parameters and the reduced number of features
 # clf_svm_pca = build_svm(c, gamma, kernel, X_train_pca, y_train)
 # score = score(clf_svm_pca, X_train_pca, y_train)
