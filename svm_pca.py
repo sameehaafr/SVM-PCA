@@ -158,10 +158,27 @@ def draw_svm(pca, c, gamma, kernel, X_train_pca, y_train, X_train_scaled):
 
 def main():               
     st.title('SVM for Classifying Tumors')
-    st.sidebar.title('Sidebar')
-    if st.sidebar.checkbox("Display data", False):
-        st.subheader("Show Dataset")
-        st.write(df)
+    st.sidebar.title('Build your own SVM model')
+    st.sidebar.subheader("Choose classifier")
+    classifier = st.sidebar.selectbox("Classifier", ("Support Vector Machine (SVM)", "Logistic Regression", "Random Forest")) 
+    if classifier == "Support Vector Machine (SVM)":
+        st.sidebar.subheader("Hyperparameters")
+        C = st.sidebar.number_input("C (Regularization parameter)", 0.01, 10.0, step=0.01, key="C")
+        kernel = st.sidebar.radio("Kernel", ("rbf", "linear"), key="kernel") 
+        gamma = st.sidebar.radio("Gamma (Kernal coefficient", ("scale", "auto"), key="gamma")
+    #metrics = st.sidebar.multiselect("What metrics to plot?", ("Confusion Matrix", "ROC Curve", "Precision-Recall Curve"))
+
+    if st.sidebar.button("Classify", key="classify"):
+        st.subheader("Support Vector Machine (SVM) results")
+        model = SVC(C=C, kernel=kernel, gamma=gamma)
+        model.fit(X_train_scaled, y_train)
+        accuracy = model.score(X_test_scaled, y_test)
+        y_pred = model.predict(X_test_scaled)
+        st.write("Accuracy: ", accuracy.round(2))
+        st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
+        st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2)) 
+        show_confusion_matrix(model, X_test_scaled, y_test)
+    
     st.caption('The objective of this project is to build an SVM model that can classify tumor characteristics as either Malignant (non-cancerous) or Benign (cancerous). The data used for this project was obtained from the UC Irvine Machine Learning Repository: https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic')
     st.caption('The code for this project can be found here: https://github.com/sameehaafr/SVM-PCA')
 
