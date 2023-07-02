@@ -47,7 +47,7 @@ def build_basic_svm(X_train_scaled, y_train):
     return clf_svm
 
 def build_svm(C, gamma, kernel, X_train_scaled, y_train):
-    clf_svm = SVC(C, gamma, kernel)
+    clf_svm = SVC(C=C, gamma=gamma, kernel=kernel)
     clf_svm.fit(X_train_scaled,y_train)
     return clf_svm
 
