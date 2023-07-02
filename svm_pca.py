@@ -121,8 +121,27 @@ def pca(X_train_scaled, X_test_scaled, y_train):
 
 
 def main():               
-    st.sidebar.title('Build your own Classification Model')
+    st.sidebar.title('Try it for yourself:')
+    st.sidebar.subheader('Enter the values for the following features:')
+    radius = st.sidebar.number_input('Radius', min_value=0.0, max_value=30.0, value=0.0, step=0.1)
+    texture = st.sidebar.number_input('Texture', min_value=0.0, max_value=30.0, value=0.0, step=0.1)
+    perimeter = st.sidebar.number_input('Perimeter', min_value=0.0, max_value=200.0, value=0.0, step=0.1)
+    area = st.sidebar.number_input('Area', min_value=0.0, max_value=2000.0, value=0.0, step=0.1)
+    smoothness = st.sidebar.number_input('Smoothness', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
+    compactness = st.sidebar.number_input('Compactness', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
+    concavity = st.sidebar.number_input('Concavity', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
+    concave_points = st.sidebar.number_input('Concave Points', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
+    symmetry = st.sidebar.number_input('Symmetry', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
+    fractal_dimension = st.sidebar.number_input('Fractal Dimension', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
     
+    st.sidebar.button('Submit')
+    if(st.sidebar.button('Submit')):
+        clf_svm_pca.predict([[radius, texture, perimeter, area, smoothness, compactness, concavity, concave_points, symmetry, fractal_dimension]])
+        if clf_svm_pca.predict([[radius, texture, perimeter, area, smoothness, compactness, concavity, concave_points, symmetry, fractal_dimension]]) == 0:
+            st.write('The tumor is: Malignant (Non-Cancerous)')
+        else:
+            st.write('The tumor is: Benign (Cancerous)')
+
     st.title('SVM for Classifying Tumors')
     st.caption('The objective of this project is to build an SVM model that can classify tumor characteristics as either Malignant (non-cancerous) or Benign (cancerous). The data used for this project was obtained from the UC Irvine Machine Learning Repository: https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic')
     st.caption('The code for this project can be found here: https://github.com/sameehaafr/SVM-PCA')
