@@ -88,7 +88,7 @@ def find_best_params(X_train_scaled, y_train):
 
 # Plot Scree Plot - PCA to reduce the number of features
 def scree_plot(X_train_scaled):
-    pca = PCA()
+    pca = PCA().fit_transform(X_train_scaled)
     #X_train_pca = pca.fit_transform(X_train_scaled)
     per_var = np.round(pca.explained_variance_ratio_*100, decimals=1)
     #labels = [str(x) for x in range(1, len(per_var)+1)]
