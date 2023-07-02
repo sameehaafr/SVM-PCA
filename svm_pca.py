@@ -37,7 +37,7 @@ gamma1 = 0.01
 kernel1 = 'rbf'
 
 # Build basic SVM model
-def build_svm(C = 1.0, gamma = 'scale', kernel='rbg', X_train_scaled = 1, y_train = 1):
+def build_svm(C = 1.0, gamma = 0.0, kernel='rbg', X_train_scaled = 1, y_train = 1):
     clf_svm = SVC(C, gamma, kernel)
     clf_svm.fit(X_train_scaled,y_train)
     return clf_svm
