@@ -12,7 +12,7 @@ from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
 from sklearn.decomposition import PCA
 from sklearn.metrics import confusion_matrix, classification_report
-from sklearn.metrics import plot_confusion_matrix
+from sklearn.metrics import plot_confusion_matrix, ConfusionMatrixDisplay
 
 # Load the data
 
@@ -154,7 +154,7 @@ X_train_scaled, X_test_scaled, y_train, y_test = split_data(df) #returns X_train
 st.markdown('## Basic SVM Model')
 clf_svm = build_basic_svm(X_train_scaled, y_train)
 st.caption("Default SVM Parameters: C = 1.0, gamma = 'scale', kernel = 'rbf'")
-plot_confusion_matrix(clf_svm, X_test_scaled, y_test, display_labels=['Malignant', 'Benign'])
+ConfusionMatrixDisplay(clf_svm, X_test_scaled, y_test, display_labels=['Malignant', 'Benign'])
 st.pyplot()
 #confusion_matrix = evaluate_svm(clf_svm, X_test_scaled, y_test)
 #st.write(confusion_matrix)
