@@ -46,7 +46,7 @@ def build_basic_svm(X_train_scaled, y_train):
     clf_svm.fit(X_train_scaled,y_train)
     return clf_svm
 
-def build__svm(C, gamma, kernel, X_train_scaled, y_train):
+def build_svm(C, gamma, kernel, X_train_scaled, y_train):
     clf_svm = SVC(C, gamma, kernel)
     clf_svm.fit(X_train_scaled,y_train)
     return clf_svm
@@ -54,6 +54,16 @@ def build__svm(C, gamma, kernel, X_train_scaled, y_train):
 # Evaluate the basic SVM model
 def evaluate_svm(clf_svm, X_test_scaled, y_test):
     return confusion_matrix(y_test, clf_svm.predict(X_test_scaled))
+
+def show_confusion_matrix(clf_svm, X_test_scaled, y_test):
+    cm = confusion_matrix(y_test, clf_svm.predict(X_test_scaled))
+    fig, ax = plt.subplots(figsize=(8, 6))
+    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False,
+                xticklabels=class_labels, yticklabels=class_labels, ax=ax)
+    plt.xlabel("Predicted")
+    plt.ylabel("True")
+    plt.title("Confusion Matrix")
+    st.pyplot(fig)
 
 # Use GridSearchCV to find the best parameters
 def find_best_params(X_train_scaled, y_train):
@@ -154,9 +164,10 @@ X_train_scaled, X_test_scaled, y_train, y_test = split_data(df) #returns X_train
 st.markdown('## Basic SVM Model')
 clf_svm = build_basic_svm(X_train_scaled, y_train)
 st.caption("Default SVM Parameters: C = 1.0, gamma = 'scale', kernel = 'rbf'")
-cm = confusion_matrix(y_test, clf_svm.predict(X_test_scaled))
-disp = ConfusionMatrixDisplay(cm, display_labels=['Malignant', 'Benign'])
-st.pyplot(disp.plot())
+show_confusion_matrix(clf_svm, X_test_scaled, y_test)
+# cm = confusion_matrix(y_test, clf_svm.predict(X_test_scaled))
+# disp = ConfusionMatrixDisplay(cm, display_labels=['Malignant', 'Benign'])
+# st.pyplot(disp.plot())
 #confusion_matrix = evaluate_svm(clf_svm, X_test_scaled, y_test)
 #st.write(confusion_matrix)
 
