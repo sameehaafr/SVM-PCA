@@ -1,5 +1,6 @@
 import pandas as pd 
 import numpy as np 
+%pip install matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 from sklearn.datasets import load_breast_cancer
