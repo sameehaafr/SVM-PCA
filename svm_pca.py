@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd 
 import numpy as np
-
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 from sklearn.datasets import load_breast_cancer
@@ -43,12 +42,12 @@ kernel1 = 'rbf'
 # Build basic SVM model
 def build_basic_svm(X_train_scaled, y_train):
     clf_svm = SVC()
-    clf_svm.fit(X_train_scaled,y_train)
+    clf_svm.fit(X_train_scaled,y_train, random_state=30)
     return clf_svm
 
 def build_svm(C, gamma, kernel, X_train_scaled, y_train):
     clf_svm = SVC(C=C, gamma=gamma, kernel=kernel)
-    clf_svm.fit(X_train_scaled,y_train)
+    clf_svm.fit(X_train_scaled,y_train, random_state=30)
     return clf_svm
 
 # Evaluate the basic SVM model
@@ -87,7 +86,7 @@ def find_best_params(X_train_scaled, y_train):
     return c, gamma, kernel
 
 def scree_plot(X_train_scaled):
-    pca = PCA().fit(X_train_scaled)
+    pca = PCA().fit(X_train_scaled, random_state=30)
     per_var = np.round(pca.explained_variance_ratio_ * 100, decimals=1)
 
     fig, ax = plt.subplots()
@@ -100,7 +99,7 @@ def scree_plot(X_train_scaled):
 
 # Build the model with the optimal parameters and the reduced number of features
 def pca(X_train_scaled, X_test_scaled, y_train):
-    pca = PCA().fit(X_train_scaled)
+    pca = PCA().fit(X_train_scaled, random_state=30)
 
     X_train_pca = pca.fit_transform(X_train_scaled)
     X_test_pca = pca.transform(X_test_scaled)
