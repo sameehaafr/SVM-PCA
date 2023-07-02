@@ -117,7 +117,7 @@ def pca(X_train_scaled, X_test_scaled, y_train):
 
     return c, gamma, kernel, X_train_pca, X_test_pca, pca
 
-def draw_svm(pca, gamma, kernel, X_train_pca, y_train, X_train_scaled):
+def draw_svm(pca, c, gamma, kernel, X_train_pca, y_train, X_train_scaled):
     clf_svm = SVC(c, gamma, kernel)
     clf_svm.fit(X_train_pca, y_train)
 
@@ -210,9 +210,9 @@ clf_svm_pca = build_svm(c, gamma, kernel, X_train_pca, y_train)
 accuracy = clf_svm_pca.score(X_test_pca, y_test)
 y_pred = clf_svm_pca.predict(X_test_pca)
 class_names = ['Malignant', 'Benign']
-st.write("Accuracy: ", accuracy.round(2))
+st.write("Accuracy:s ", accuracy.round(2))
 st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
 st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2))
 
 st.subheader("Graphing SVM")
-draw_svm(pca1, gamma, kernel, X_train_pca, y_train, X_train_scaled)
+draw_svm(pca1, c, gamma, kernel, X_train_pca, y_train, X_train_scaled)
