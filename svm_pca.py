@@ -86,19 +86,12 @@ def find_best_params(X_train_scaled, y_train):
 
     return c, gamma, kernel
 
-# Build the model with the optimal parameters
-# clf_svm = SVC(C=10, gamma=0.01, kernel='rbf')
-# clf_svm.fit(X_train_scaled,y_train)
-
-# Evaluate the model with the optimal parameters
-# confusion_matrix(y_test, clf_svm.predict(X_test_scaled))
-
 # Plot Scree Plot - PCA to reduce the number of features
 def scree_plot(X_train_scaled):
     pca = PCA()
-    X_train_pca = pca.fit_transform(X_train_scaled)
+    #X_train_pca = pca.fit_transform(X_train_scaled)
     per_var = np.round(pca.explained_variance_ratio_*100, decimals=1)
-    labels = [str(x) for x in range(1, len(per_var)+1)]
+    #labels = [str(x) for x in range(1, len(per_var)+1)]
 
     plt.bar(x=range(1, len(per_var)+1), height=per_var)
     plt.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
@@ -135,65 +128,56 @@ def pca(X_train_scaled, X_test_scaled, y_train):
 
     return c, gamma, kernel, X_train_pca, X_test_pca
 
-# Build the model with the optimal parameters and the reduced number of features
-# clf_svm_pca = SVC(C=0.5, gamma=0.0001, kernel='rbf')
-# clf_svm_pca.fit(X_train_pca, y_train)
-
-# Evaluate the model with the optimal parameters and the reduced number of features
-def score(clf_svm_pca, X_train_pca, y_train):
-    train_score = clf_svm_pca.score(X_train_pca, y_train)
-    return train_score
-
-
 # ---------------------------------------------DISPLAY------------------------------------------------------------- #
 
 st.markdown('# SVM for Classifying Tumors')
-st.caption('The objective of this project is to build an LSTM model that can forecast PM10 values in LA, California over X amount of time. The data used for this project was obtained from the EPA website.')
-st.caption('This project was worked on during the 2022-23 school year as a part of the club ML@P (Machine Learning at Purdue). Check us out here: https://ml-purdue.github.io/')
-st.caption('The code for this project can be found here: https://github.com/sameehaafr/LSTM-TSF/tree/master')
+st.caption('The objective of this project is to build an SVM model that can classify tumor characteristics as either Malignant (non-cancerous) or Benign (cancerous). The data used for this project was obtained from the UC Irvine Machine Learning Repository: https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic')
+st.caption('The code for this project can be found here: https://github.com/sameehaafr/SVM-PCA')
 
 
-df = load_data() #returns df
-st.dataframe(df) #returns df
+df = load_data()
+st.dataframe(df)
 
-X_train_scaled, X_test_scaled, y_train, y_test = split_data(df) #returns X_train_scaled, X_test_scaled, y_train, y_test
+X_train_scaled, X_test_scaled, y_train, y_test = split_data(df)
 
 # Build basic SVM model
-st.markdown('## Basic SVM Model')
-clf_svm = build_basic_svm(X_train_scaled, y_train)
+st.subheader('Basic SVM Model')
 st.caption("Default SVM Parameters: C = 1.0, gamma = 'scale', kernel = 'rbf'")
-st.markdown('## Confusion Matrix')
-show_confusion_matrix(clf_svm, X_test_scaled, y_test)
+st.caption("Read more about the parameters and SVC function here: https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html")
+clf_svm = build_basic_svm(X_train_scaled, y_train)
+st.markdown('#### Confusion Matrix and Metrics for Basic SVM Model')
 accuracy = clf_svm.score(X_test_scaled, y_test)
 y_pred = clf_svm.predict(X_test_scaled)
-class_names = ['Malignant', 'Benign']
 st.write("Accuracy: ", accuracy.round(2))
-st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
-st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2)) 
+st.write("Precision: ", precision_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2))
+st.write("Recall: ", recall_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2)) 
+show_confusion_matrix(clf_svm, X_test_scaled, y_test)
 
 
 # Use GridSearchCV to find the best parameters
 c, gamma, kernel = find_best_params(X_train_scaled, y_train)
 
 # Build the model with the optimal parameters
-st.markdown('## SVM Model with Optimal Parameters')
-st.caption('Parameters: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
+st.subheader('## SVM Model with Optimal Parameters')
+st.caption('Optimal Parameters: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
 clf_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train)
-st.markdown('## Confusion Matrix')
-show_confusion_matrix(clf_svm, X_test_scaled, y_test)
-accuracy = clf_svm.score(X_test_scaled, y_test)
+st.markdown('#### Confusion Matrix and Metrics for SVM with Optimal Parameters')
 y_pred = clf_svm.predict(X_test_scaled)
 class_names = ['Malignant', 'Benign']
 st.write("Accuracy: ", accuracy.round(2))
 st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
 st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2)) 
+show_confusion_matrix(clf_svm, X_test_scaled, y_test)
+accuracy = clf_svm.score(X_test_scaled, y_test)
 
-# Plot Scree Plot - PCA to reduce the number of features
+# Plot Scree Plot - PCA to reduce the number of featuress
+st.subheader('#### Plotting Scree Plot - PCA to reduce the number of features')
 scree_plot = scree_plot(X_train_scaled) #returns scree plot
+st.pyplot(scree_plot)
 c, gamma, kernel, X_train_pca, X_test_pca = pca(X_train_scaled, X_test_scaled, y_train) #returns c, gamma, kernel, X_train_pca, X_test_pca
-st.caption('Parameters: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
-# Build the model with the optimal parameters and the reduced number of features
+st.caption('Optimal Parameters determined by PCA: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
 
+# Build the model with the optimal parameters and the reduced number of features
 clf_svm_pca = build_svm(c, gamma, kernel, X_train_pca, y_train)
 accuracy = clf_svm.score(X_test_scaled, y_test)
 y_pred = clf_svm.predict(X_test_scaled)
@@ -201,5 +185,3 @@ class_names = ['Malignant', 'Benign']
 st.write("Accuracy: ", accuracy.round(2))
 st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
 st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2)) 
-# score = score(clf_svm_pca, X_train_pca, y_train)
-# st.write('Train Score: ', score)
