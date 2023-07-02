@@ -118,7 +118,7 @@ def pca(X_train_scaled, X_test_scaled, y_train):
     return c, gamma, kernel, X_train_pca, X_test_pca, pca
 
 def draw_svm(pca, c, gamma, kernel, X_train_pca, y_train, X_train_scaled):
-    clf_svm = SVC(c, gamma, kernel)
+    clf_svm = SVC(C=c, gamma=gamma, kernel=kernel, random_state=30)
     clf_svm.fit(X_train_pca, y_train)
 
     x_test_pca = pca.transform(X_train_scaled)
