@@ -93,12 +93,12 @@ def scree_plot(X_train_scaled):
     per_var = np.round(pca.explained_variance_ratio_*100, decimals=1)
     #labels = [str(x) for x in range(1, len(per_var)+1)]
 
-    plt.bar(x=range(1, len(per_var)+1), height=per_var)
+    fig = plt.bar(x=range(1, len(per_var)+1), height=per_var)
     plt.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
     plt.ylabel('Percentage of Explained Variance')
     plt.xlabel('Principal Component')
     plt.title('Scree Plot')
-    return st.bar_chart(plt)
+    return st.bar_chart(fig)
 
 # Build the model with the optimal parameters and the reduced number of features
 def pca(X_train_scaled, X_test_scaled, y_train):
