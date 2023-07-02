@@ -40,7 +40,12 @@ gamma1 = 0.01
 kernel1 = 'rbf'
 
 # Build basic SVM model
-def build_svm(C, gamma, kernel, X_train_scaled, y_train):
+def build_basic_svm(X_train_scaled, y_train):
+    clf_svm = SVC()
+    clf_svm.fit(X_train_scaled,y_train)
+    return clf_svm
+
+def build__svm(C, gamma, kernel, X_train_scaled, y_train):
     clf_svm = SVC(C, gamma, kernel)
     clf_svm.fit(X_train_scaled,y_train)
     return clf_svm
@@ -145,21 +150,24 @@ st.dataframe(df) #returns df
 X_train_scaled, X_test_scaled, y_train, y_test = split_data(df) #returns X_train_scaled, X_test_scaled, y_train, y_test
 
 # Build basic SVM model
-clf_svm = build_svm(default_c, default_gamma, default_kernel, X_train_scaled, y_train)
+st.caption('Basic SVM Model')
+clf_svm = build_basic_svm(default_c, default_gamma, default_kernel, X_train_scaled, y_train)
+st.caption(clf_svm.params)
 confusion_matrix = evaluate_svm(clf_svm, X_test_scaled, y_test)
-c, gamma, kernel = find_best_params(X_train_scaled, y_train)
+# Use GridSearchCV to find the best parameters
+# c, gamma, kernel = find_best_params(X_train_scaled, y_train)
 
-st.subheader("Confusion Matrix")
-#plot_confusion_matrix(model, x_test, y_test, display_labels=   class_names)
-st.pyplot(confusion_matrix)
+# st.subheader("Confusion Matrix")
+# #plot_confusion_matrix(model, x_test, y_test, display_labels=   class_names)
+# st.pyplot(confusion_matrix)
 
-# Build the model with the optimal parameters
-clf_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train) #returns clf_svm
-confusion_matrix = evaluate_svm(clf_svm, X_test_scaled, y_test) #returns confusion matrix
+# # Build the model with the optimal parameters
+# clf_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train) #returns clf_svm
+# confusion_matrix = evaluate_svm(clf_svm, X_test_scaled, y_test) #returns confusion matrix
 
-scree_plot = scree_plot(X_train_scaled) #returns scree plot
-c, gamma, kernel, X_train_pca, X_test_pca = pca() #returns c, gamma, kernel, X_train_pca, X_test_pca
+# scree_plot = scree_plot(X_train_scaled) #returns scree plot
+# c, gamma, kernel, X_train_pca, X_test_pca = pca() #returns c, gamma, kernel, X_train_pca, X_test_pca
 
-# Build the model with the optimal parameters and the reduced number of features
-clf_svm_pca = build_svm(c, gamma, kernel, X_train_pca, y_train)
-score = score(clf_svm_pca, X_train_pca, y_train)
+# # Build the model with the optimal parameters and the reduced number of features
+# clf_svm_pca = build_svm(c, gamma, kernel, X_train_pca, y_train)
+# score = score(clf_svm_pca, X_train_pca, y_train)
