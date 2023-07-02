@@ -187,7 +187,7 @@ def main():
     texture = st.sidebar.number_input('Texture', min_value=0.0, max_value=30.0, value=0.0, step=0.1)
     perimeter = st.sidebar.number_input('Perimeter', min_value=0.0, max_value=200.0, value=0.0, step=0.1)
     area = st.sidebar.number_input('Area', min_value=0.0, max_value=2000.0, value=0.0, step=0.1)
-    smoothness = st.sidebsar.number_input('Smoothness', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
+    smoothness = st.sidebar.number_input('Smoothness', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
     compactness = st.sidebar.number_input('Compactness', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
     concavity = st.sidebar.number_input('Concavity', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
     concave_points = st.sidebar.number_input('Concave Points', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
