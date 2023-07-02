@@ -183,4 +183,4 @@ st.caption('Parameters: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel
 
 clf_svm_pca = build_svm(c, gamma, kernel, X_train_pca, y_train)
 score = score(clf_svm_pca, X_train_pca, y_train)
-st.write(score)
+st.write('Train Score: ', score)
