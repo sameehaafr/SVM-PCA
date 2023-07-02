@@ -143,9 +143,15 @@ df = load_data() #returns df
 st.dataframe(df) #returns df
 
 X_train_scaled, X_test_scaled, y_train, y_test = split_data(df) #returns X_train_scaled, X_test_scaled, y_train, y_test
+
+# Build basic SVM model
 clf_svm = build_svm(default_c, default_gamma, default_kernel, X_train_scaled, y_train)
 confusion_matrix = evaluate_svm(clf_svm, X_test_scaled, y_test)
 c, gamma, kernel = find_best_params(X_train_scaled, y_train)
+
+st.subheader("Confusion Matrix")
+#plot_confusion_matrix(model, x_test, y_test, display_labels=   class_names)
+st.pyplot(confusion_matrix)
 
 # Build the model with the optimal parameters
 clf_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train) #returns clf_svm
