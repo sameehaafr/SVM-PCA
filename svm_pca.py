@@ -170,8 +170,7 @@ class_names = ['Malignant', 'Benign']
 st.write("Accuracy: ", accuracy.round(2))
 st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
 st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2)) 
-# score = score(clf_svm, X_train_scaled, y_train)
-# st.write('Train Score: ', score)
+
 
 # Use GridSearchCV to find the best parameters
 c, gamma, kernel = find_best_params(X_train_scaled, y_train)
@@ -182,8 +181,12 @@ st.caption('Parameters: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel
 clf_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train)
 st.markdown('## Confusion Matrix')
 show_confusion_matrix(clf_svm, X_test_scaled, y_test)
-# score = score(clf_svm, X_train_scaled, y_train)
-# st.write('Train Score: ', score)
+accuracy = clf_svm.score(X_test_scaled, y_test)
+y_pred = clf_svm.predict(X_test_scaled)
+class_names = ['Malignant', 'Benign']
+st.write("Accuracy: ", accuracy.round(2))
+st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
+st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2)) 
 
 # Plot Scree Plot - PCA to reduce the number of features
 scree_plot = scree_plot(X_train_scaled) #returns scree plot
@@ -192,5 +195,11 @@ st.caption('Parameters: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel
 # Build the model with the optimal parameters and the reduced number of features
 
 clf_svm_pca = build_svm(c, gamma, kernel, X_train_pca, y_train)
-score = score(clf_svm_pca, X_train_pca, y_train)
-st.write('Train Score: ', score)
+accuracy = clf_svm.score(X_test_scaled, y_test)
+y_pred = clf_svm.predict(X_test_scaled)
+class_names = ['Malignant', 'Benign']
+st.write("Accuracy: ", accuracy.round(2))
+st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
+st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2)) 
+# score = score(clf_svm_pca, X_train_pca, y_train)
+# st.write('Train Score: ', score)
