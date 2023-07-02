@@ -133,7 +133,7 @@ def score(clf_svm_pca, X_train_pca, y_train):
 
 # ---------------------------------------------DISPLAY------------------------------------------------------------- #
 
-st.markdown('# LSTM for Time Series Forecasting')
+st.markdown('# SVM for Classifying Tumors')
 st.caption('The objective of this project is to build an LSTM model that can forecast PM10 values in LA, California over X amount of time. The data used for this project was obtained from the EPA website.')
 st.caption('This project was worked on during the 2022-23 school year as a part of the club ML@P (Machine Learning at Purdue). Check us out here: https://ml-purdue.github.io/')
 st.caption('The code for this project can be found here: https://github.com/sameehaafr/LSTM-TSF/tree/master')
