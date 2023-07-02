@@ -140,7 +140,7 @@ st.caption('The code for this project can be found here: https://github.com/same
 
 
 df = load_data() #returns df
-st.dframe(df, 20, 20) #returns df
+st.dataframe(df) #returns df
 
 X_train_scaled, X_test_scaled, y_train, y_test = split_data(df) #returns X_train_scaled, X_test_scaled, y_train, y_test
 clf_svm = build_svm(default_c, default_gamma, default_kernel, X_train_scaled, y_train)
