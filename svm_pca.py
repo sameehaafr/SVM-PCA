@@ -52,9 +52,6 @@ def build_svm(C, gamma, kernel, X_train_scaled, y_train):
     return clf_svm
 
 # Evaluate the basic SVM model
-def evaluate_svm(clf_svm, X_test_scaled, y_test):
-    return confusion_matrix(y_test, clf_svm.predict(X_test_scaled))
-
 def show_confusion_matrix(clf_svm, X_test_scaled, y_test):
     class_labels = ['Malignant', 'Benign']
     cm = confusion_matrix(y_test, clf_svm.predict(X_test_scaled))
@@ -62,7 +59,7 @@ def show_confusion_matrix(clf_svm, X_test_scaled, y_test):
     sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False,
                 xticklabels=class_labels, yticklabels=class_labels, ax=ax)
     plt.xlabel("Predicted")
-    plt.ylabel("True")
+    plt.ylabel("Actual")
     plt.title("Confusion Matrix")
     st.pyplot(fig)
 
@@ -165,24 +162,18 @@ X_train_scaled, X_test_scaled, y_train, y_test = split_data(df) #returns X_train
 st.markdown('## Basic SVM Model')
 clf_svm = build_basic_svm(X_train_scaled, y_train)
 st.caption("Default SVM Parameters: C = 1.0, gamma = 'scale', kernel = 'rbf'")
+st.markdown('## Confusion Matrix')
 show_confusion_matrix(clf_svm, X_test_scaled, y_test)
-# cm = confusion_matrix(y_test, clf_svm.predict(X_test_scaled))
-# disp = ConfusionMatrixDisplay(cm, display_labels=['Malignant', 'Benign'])
-# st.pyplot(disp.plot())
-#confusion_matrix = evaluate_svm(clf_svm, X_test_scaled, y_test)
-#st.write(confusion_matrix)
-
 
 # Use GridSearchCV to find the best parameters
-# c, gamma, kernel = find_best_params(X_train_scaled, y_train)
+c, gamma, kernel = find_best_params(X_train_scaled, y_train)
 
-# st.subheader("Confusion Matrix")
-# #plot_confusion_matrix(model, x_test, y_test, display_labels=   class_names)
-# st.pyplot(confusion_matrix)
-
-# # Build the model with the optimal parameters
-# clf_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train) #returns clf_svm
-# confusion_matrix = evaluate_svm(clf_svm, X_test_scaled, y_test) #returns confusion matrix
+# Build the model with the optimal parameters
+st.markdown('## SVM Model with Optimal Parameters')
+st.caption('Parameters: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
+clf_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train)
+st.markdown('## Confusion Matrix')
+show_confusion_matrix(clf_svm, X_test_scaled, y_test)
 
 # scree_plot = scree_plot(X_train_scaled) #returns scree plot
 # c, gamma, kernel, X_train_pca, X_test_pca = pca() #returns c, gamma, kernel, X_train_pca, X_test_pca
