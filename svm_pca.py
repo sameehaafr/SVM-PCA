@@ -1,6 +1,7 @@
+import streamlit as st
 import pandas as pd 
-import numpy as np 
-%pip install matplotlib
+import numpy as np
+
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 from sklearn.datasets import load_breast_cancer
