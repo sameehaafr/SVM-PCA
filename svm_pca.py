@@ -141,9 +141,9 @@ df = load_data() #returns df
 st.dframe(df, 20, 20) #returns df
 
 X_train_scaled, X_test_scaled, y_train, y_test = split_data(df) #returns X_train_scaled, X_test_scaled, y_train, y_test
-clf_svm = build_svm(default_c, default_gamma, default_kernel, X_train_scaled, y_train) #returns clf_svm
-confusion_matrix = evaluate_svm(clf_svm, X_test_scaled, y_test) #returns confusion matrix
-c, gamma, kernel = find_best_params(X_train_scaled, y_train) #returns c, gamma, kernel
+clf_svm = build_svm(default_c, default_gamma, default_kernel, X_train_scaled, y_train)
+confusion_matrix = evaluate_svm(clf_svm, X_test_scaled, y_test)
+c, gamma, kernel = find_best_params(X_train_scaled, y_train)
 
 # Build the model with the optimal parameters
 clf_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train) #returns clf_svm
@@ -153,5 +153,5 @@ scree_plot = scree_plot(X_train_scaled) #returns scree plot
 c, gamma, kernel, X_train_pca, X_test_pca = pca() #returns c, gamma, kernel, X_train_pca, X_test_pca
 
 # Build the model with the optimal parameters and the reduced number of features
-clf_svm_pca = build_svm(C=c, gamma=gamma, kernel=kernel, X_train_pca, y_train) #returns clf_svm_pca
-score = score(clf_svm_pca, X_train_pca, y_train) #returns train_score
+clf_svm_pca = build_svm(c, gamma, kernel, X_train_pca, y_train)
+score = score(clf_svm_pca, X_train_pca, y_train)
