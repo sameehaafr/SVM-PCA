@@ -179,8 +179,8 @@ c, gamma, kernel, X_train_pca, X_test_pca = pca(X_train_scaled, X_test_scaled, y
 # Build the model with the optimal parameters and the reduced number of features
 st.caption('Optimal Parameters determined by PCA: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
 clf_svm_pca = build_svm(c, gamma, kernel, X_train_pca, y_train)
-accuracy = clf_svm_pca.score(X_test_scaled, y_test)
-y_pred = clf_svm_pca.predict(X_test_scaled)
+accuracy = clf_svm_pca.score(X_test_pca, y_test)
+y_pred = clf_svm_pca.predict(X_test_pca)
 class_names = ['Malignant', 'Benign']
 st.write("Accuracy: ", accuracy.round(2))
 st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
