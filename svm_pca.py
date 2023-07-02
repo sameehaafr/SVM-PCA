@@ -164,6 +164,8 @@ clf_svm = build_basic_svm(X_train_scaled, y_train)
 st.caption("Default SVM Parameters: C = 1.0, gamma = 'scale', kernel = 'rbf'")
 st.markdown('## Confusion Matrix')
 show_confusion_matrix(clf_svm, X_test_scaled, y_test)
+score = score(clf_svm, X_train_scaled, y_train)
+st.write('Train Score: ', score)
 
 # Use GridSearchCV to find the best parameters
 c, gamma, kernel = find_best_params(X_train_scaled, y_train)
@@ -174,6 +176,8 @@ st.caption('Parameters: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel
 clf_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train)
 st.markdown('## Confusion Matrix')
 show_confusion_matrix(clf_svm, X_test_scaled, y_test)
+score = score(clf_svm, X_train_scaled, y_train)
+st.write('Train Score: ', score)
 
 # Plot Scree Plot - PCA to reduce the number of features
 scree_plot = scree_plot(X_train_scaled) #returns scree plot
