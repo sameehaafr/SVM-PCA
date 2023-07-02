@@ -202,7 +202,7 @@ st.header('Plotting Scree Plot - PCA to reduce the number of features')
 fig = scree_plot(X_train_scaled)
 st.pyplot(fig)
 
-c, gamma, kernel, X_train_pca, X_test_pca, pca = pca(X_train_scaled, X_test_scaled, y_train)
+c, gamma, kernel, X_train_pca, X_test_pca, pca1 = pca(X_train_scaled, X_test_scaled, y_train)
 
 # Build the model with the optimal parameters and the reduced number of features
 st.caption('Optimal Parameters determined by PCA: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
@@ -215,4 +215,4 @@ st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).roun
 st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2))
 
 st.subheader("Graphing SVM")
-draw_svm(pca, gamma, kernel, X_train_pca, y_train, X_train_scaled)
+draw_svm(pca1, gamma, kernel, X_train_pca, y_train, X_train_scaled)
