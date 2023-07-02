@@ -31,14 +31,6 @@ def split_data(df):
     X_test_scaled = scale(X_test)
     return X_train_scaled, X_test_scaled, y_train, y_test
 
-default_c = 1.0
-default_gamma = 'scale'
-default_kernel = 'rbf'
-
-c1 = 10
-gamma1 = 0.01
-kernel1 = 'rbf'
-
 # Build basic SVM model
 def build_basic_svm(X_train_scaled, y_train):
     clf_svm = SVC(random_state=30)
@@ -123,7 +115,43 @@ def pca(X_train_scaled, X_test_scaled, y_train):
     gamma = optimal_params.best_params_['gamma']
     kernel = optimal_params.best_params_['kernel']
 
-    return c, gamma, kernel, X_train_pca, X_test_pca
+    return c, gamma, kernel, X_train_pca, X_test_pca, pca
+
+def draw_svm(pca, gamma, kernel, X_train_pca, y_train, X_train_scaled):
+    clf_svm = SVC(c, gamma, kernel)
+    clf_svm.fit(X_train_pca, y_train)
+
+    x_test_pca = pca.transform(X_train_scaled)
+    test_pc1_coords = x_test_pca[:, 0]
+    test_pc2_coords = x_test_pca[:, 1]
+
+    x_min = test_pc1_coords.min() - 1
+    x_max = test_pc1_coords.max() + 1
+
+    y_min = test_pc2_coords.min() - 1
+    y_max = test_pc2_coords.max() + 1
+
+    xx, yy = np.meshgrid(np.arange(start=x_min, stop=x_max, step=0.1),
+                        np.arange(start=y_min, stop=y_max, step=0.1))
+
+    Z = clf_svm.predict(np.column_stack((xx.ravel(), yy.ravel())))
+
+    Z = Z.reshape(xx.shape)
+    fig, ax = plt.subplots(figsize=(10,10))
+    ax.contourf(xx, yy, Z, alpha=0.1)
+    cmap = colors.ListedColormap(['#e41a1c', '#4daf4a'])
+
+    scatter = ax.scatter(test_pc1_coords, test_pc2_coords, c=y_train, cmap=cmap, s=100, edgecolors='k', alpha=0.7)
+
+    legend = ax.legend(scatter.legend_elements()[0], scatter.legend_elements()[1], loc='upper right')
+    legend.get_texts()[0].set_text('Benign')
+    legend.get_texts()[1].set_text('Malignant')
+
+
+    ax.set_ylabel('PC2')
+    ax.set_xlabel('PC1')   
+    ax.set_title('Decision surface using the PCA transformed/projected features')
+    return st.pyplot(fig)
 
 # ---------------------------------------------DISPLAY------------------------------------------------------------- #
 
@@ -141,14 +169,14 @@ X_train_scaled, X_test_scaled, y_train, y_test = split_data(df)
 st.header('Basic SVM Model')
 st.caption("Default SVM Parameters: C = 1.0, gamma = 'scale', kernel = 'rbf'")
 st.caption("Read more about the parameters and SVC function here: https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html")
-clf_svm = build_basic_svm(X_train_scaled, y_train)
+basic_svm = build_basic_svm(X_train_scaled, y_train)
 st.subheader('Confusion Matrix and Metrics for Basic SVM Model')
-accuracy = clf_svm.score(X_test_scaled, y_test)
-y_pred = clf_svm.predict(X_test_scaled)
+accuracy = basic_svm.score(X_test_scaled, y_test)
+y_pred = basic_svm.predict(X_test_scaled)
 st.write("Accuracy: ", accuracy.round(2))
 st.write("Precision: ", precision_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2))
 st.write("Recall: ", recall_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2)) 
-show_confusion_matrix(clf_svm, X_test_scaled, y_test)
+show_confusion_matrix(basic_svm, X_test_scaled, y_test)
 
 
 # Use GridSearchCV to find the best parameters
@@ -157,16 +185,16 @@ c, gamma, kernel = find_best_params(X_train_scaled, y_train)
 # Build the model with the optimal parameters
 st.header('SVM Model with Optimal Parameters')
 st.caption('Optimal Parameters: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
-clf_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train)
+opt_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train)
 st.subheader('Confusion Matrix and Metrics for SVM with Optimal Parameters')
-accuracy = clf_svm.score(X_test_scaled, y_test)
-y_pred = clf_svm.predict(X_test_scaled)
+accuracy = opt_svm.score(X_test_scaled, y_test)
+y_pred = opt_svm.predict(X_test_scaled)
 class_names = ['Malignant', 'Benign']
 st.write("Accuracy: ", accuracy.round(2))
 st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
 st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2)) 
-show_confusion_matrix(clf_svm, X_test_scaled, y_test)
-accuracy = clf_svm.score(X_test_scaled, y_test)
+show_confusion_matrix(opt_svm, X_test_scaled, y_test)
+accuracy = opt_svm.score(X_test_scaled, y_test)
 
 # Plot Scree Plot - PCA to reduce the number of featuress
 st.header('Plotting Scree Plot - PCA to reduce the number of features')
@@ -174,7 +202,7 @@ st.header('Plotting Scree Plot - PCA to reduce the number of features')
 fig = scree_plot(X_train_scaled)
 st.pyplot(fig)
 
-c, gamma, kernel, X_train_pca, X_test_pca = pca(X_train_scaled, X_test_scaled, y_train)
+c, gamma, kernel, X_train_pca, X_test_pca, pca = pca(X_train_scaled, X_test_scaled, y_train)
 
 # Build the model with the optimal parameters and the reduced number of features
 st.caption('Optimal Parameters determined by PCA: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
@@ -184,4 +212,7 @@ y_pred = clf_svm_pca.predict(X_test_pca)
 class_names = ['Malignant', 'Benign']
 st.write("Accuracy: ", accuracy.round(2))
 st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
-st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2)) 
+st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2))
+
+st.subheader("Graphing SVM")
+draw_svm(pca, gamma, kernel, X_train_pca, y_train, X_train_scaled)
