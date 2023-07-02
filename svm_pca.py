@@ -78,7 +78,7 @@ def find_best_params(X_train_scaled, y_train):
     return c, gamma, kernel
 
 def scree_plot(X_train_scaled):
-    pca = PCA(random_state=30).fit(X_train_scaled)
+    pca = PCA(n=2, random_state=30).fit(X_train_scaled)
     per_var = np.round(pca.explained_variance_ratio_ * 100, decimals=1)
 
     fig, ax = plt.subplots()
@@ -91,7 +91,7 @@ def scree_plot(X_train_scaled):
 
 # Build the model with the optimal parameters and the reduced number of features
 def pca(X_train_scaled, X_test_scaled, y_train):
-    pca = PCA(random_state=30).fit(X_train_scaled)
+    pca = PCA(n_components=2, random_state=30).fit(X_train_scaled)
 
     X_train_pca = pca.fit_transform(X_train_scaled)
     X_test_pca = pca.transform(X_test_scaled)
@@ -214,5 +214,5 @@ st.write("Accuracy:s ", accuracy.round(2))
 st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
 st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2))
 
-st.subheader("Graphing SVM")
-draw_svm(pca1, c, gamma, kernel, X_train_pca, y_train, X_train_scaled)
+#st.subheader("Graphing SVM")
+#draw_svm(pca1, c, gamma, kernel, X_train_pca, y_train, X_train_scaled)
