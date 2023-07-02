@@ -32,13 +32,22 @@ def split_data(df):
     X_test_scaled = scale(X_test)
     return X_train_scaled, X_test_scaled, y_train, y_test
 
+default_c = 1.0
+default_gamma = 'scale'
+default_kernel = 'rbf'
+
 c1 = 10
 gamma1 = 0.01
 kernel1 = 'rbf'
 
 # Build basic SVM model
-def build_svm(C = 1.0, gamma = 0.0, kernel='rbg', X_train_scaled = 1, y_train = 1):
-    clf_svm = SVC(C, gamma, kernel)
+def build_basic_svm(X_train_scaled, y_train):
+    clf_svm = SVC()
+    clf_svm.fit(X_train_scaled,y_train)
+    return clf_svm
+
+def build_svm(C, gamma, kernel, X_train_scaled, y_train):
+    clf_svm = SVC(C=C, gamma=gamma, kernel=kernel)
     clf_svm.fit(X_train_scaled,y_train)
     return clf_svm
 
@@ -151,7 +160,7 @@ X_train_scaled, X_test_scaled, y_train, y_test = split_data(df) #returns X_train
 
 # Build basic SVM model
 st.markdown('## Basic SVM Model')
-clf_svm = build_svm(X_train_scaled, y_train)
+clf_svm = build_basic_svm(X_train_scaled, y_train)
 st.caption("Default SVM Parameters: C = 1.0, gamma = 'scale', kernel = 'rbf'")
 st.markdown('## Confusion Matrix')
 show_confusion_matrix(clf_svm, X_test_scaled, y_test)
