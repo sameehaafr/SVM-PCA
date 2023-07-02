@@ -150,9 +150,9 @@ st.dataframe(df) #returns df
 X_train_scaled, X_test_scaled, y_train, y_test = split_data(df) #returns X_train_scaled, X_test_scaled, y_train, y_test
 
 # Build basic SVM model
-st.caption('Basic SVM Model')
+st.heading('## Basic SVM Model')
 clf_svm = build_basic_svm(X_train_scaled, y_train)
-st.caption(clf_svm)
+st.caption(Default SVM Parameters: C = 1.0, gamma = 'scale', kernel = 'rbf')
 confusion_matrix = evaluate_svm(clf_svm, X_test_scaled, y_test)
 # Use GridSearchCV to find the best parameters
 # c, gamma, kernel = find_best_params(X_train_scaled, y_train)
