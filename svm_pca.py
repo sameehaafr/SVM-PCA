@@ -157,9 +157,7 @@ def draw_svm(pca, c, gamma, kernel, X_train_pca, y_train, X_train_scaled):
 
 
 def main():               
-    st.title('SVM for Classifying Tumors')
     st.sidebar.title('Build your own SVM model')
-    st.sidebar.subheader('Go back to original article')
     if st.sidebar.button('Go back to original article'):
         st.title('SVM for Classifying Tumors')
         st.caption('The objective of this project is to build an SVM model that can classify tumor characteristics as either Malignant (non-cancerous) or Benign (cancerous). The data used for this project was obtained from the UC Irvine Machine Learning Repository: https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic')
