@@ -130,7 +130,7 @@ def pca(X_train_scaled, X_test_scaled, y_train):
 
 # ---------------------------------------------DISPLAY------------------------------------------------------------- #
 
-st.markdown('# SVM for Classifying Tumors')
+st.title('SVM for Classifying Tumors')
 st.caption('The objective of this project is to build an SVM model that can classify tumor characteristics as either Malignant (non-cancerous) or Benign (cancerous). The data used for this project was obtained from the UC Irvine Machine Learning Repository: https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic')
 st.caption('The code for this project can be found here: https://github.com/sameehaafr/SVM-PCA')
 
@@ -141,11 +141,11 @@ st.dataframe(df)
 X_train_scaled, X_test_scaled, y_train, y_test = split_data(df)
 
 # Build basic SVM model
-st.subheader('Basic SVM Model')
+st.header('Basic SVM Model')
 st.caption("Default SVM Parameters: C = 1.0, gamma = 'scale', kernel = 'rbf'")
 st.caption("Read more about the parameters and SVC function here: https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html")
 clf_svm = build_basic_svm(X_train_scaled, y_train)
-st.markdown('#### Confusion Matrix and Metrics for Basic SVM Model')
+st.subheader('Confusion Matrix and Metrics for Basic SVM Model')
 accuracy = clf_svm.score(X_test_scaled, y_test)
 y_pred = clf_svm.predict(X_test_scaled)
 st.write("Accuracy: ", accuracy.round(2))
@@ -158,10 +158,10 @@ show_confusion_matrix(clf_svm, X_test_scaled, y_test)
 c, gamma, kernel = find_best_params(X_train_scaled, y_train)
 
 # Build the model with the optimal parameters
-st.subheader('## SVM Model with Optimal Parameters')
+st.header('SVM Model with Optimal Parameters')
 st.caption('Optimal Parameters: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
 clf_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train)
-st.markdown('#### Confusion Matrix and Metrics for SVM with Optimal Parameters')
+st.subheader('Confusion Matrix and Metrics for SVM with Optimal Parameters')
 y_pred = clf_svm.predict(X_test_scaled)
 class_names = ['Malignant', 'Benign']
 st.write("Accuracy: ", accuracy.round(2))
@@ -171,7 +171,7 @@ show_confusion_matrix(clf_svm, X_test_scaled, y_test)
 accuracy = clf_svm.score(X_test_scaled, y_test)
 
 # Plot Scree Plot - PCA to reduce the number of featuress
-st.subheader('#### Plotting Scree Plot - PCA to reduce the number of features')
+st.header('Plotting Scree Plot - PCA to reduce the number of features')
 scree_plot = scree_plot(X_train_scaled) #returns scree plot
 st.pyplot(scree_plot)
 c, gamma, kernel, X_train_pca, X_test_pca = pca(X_train_scaled, X_test_scaled, y_train) #returns c, gamma, kernel, X_train_pca, X_test_pca
