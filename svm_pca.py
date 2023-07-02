@@ -216,5 +216,6 @@ def main():
     st.write("Accuracy:s ", accuracy.round(2))
     st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
     st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2))
-if __name__ == ‘__main__’:
+
+if __name__ == '__main__':
     main()
