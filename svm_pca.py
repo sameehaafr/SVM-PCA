@@ -134,7 +134,7 @@ def main():
     symmetry = st.sidebar.number_input('Symmetry', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
     fractal_dimension = st.sidebar.number_input('Fractal Dimension', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
     
-    st.sidebar.button('Submit')
+    st.sidebar.button('Submit', key='submit')
     if(st.sidebar.button('Submit')):
         clf_svm_pca.predict([[radius, texture, perimeter, area, smoothness, compactness, concavity, concave_points, symmetry, fractal_dimension]])
         if clf_svm_pca.predict([[radius, texture, perimeter, area, smoothness, compactness, concavity, concave_points, symmetry, fractal_dimension]]) == 0:
