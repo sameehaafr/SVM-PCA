@@ -151,7 +151,7 @@ X_train_scaled, X_test_scaled, y_train, y_test = split_data(df) #returns X_train
 
 # Build basic SVM model
 st.caption('Basic SVM Model')
-clf_svm = build_basic_svm(default_c, default_gamma, default_kernel, X_train_scaled, y_train)
+clf_svm = build_basic_svm(X_train_scaled, y_train)
 st.caption(clf_svm.params)
 confusion_matrix = evaluate_svm(clf_svm, X_test_scaled, y_test)
 # Use GridSearchCV to find the best parameters
