@@ -98,7 +98,7 @@ def scree_plot(X_train_scaled):
     plt.ylabel('Percentage of Explained Variance')
     plt.xlabel('Principal Component')
     plt.title('Scree Plot')
-    return plt.show()
+    return st.pyplot(plt)
 
 # Build the model with the optimal parameters and the reduced number of features
 def pca(X_train_scaled, X_test_scaled, y_train):
