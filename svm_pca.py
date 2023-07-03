@@ -67,11 +67,11 @@ def find_best_params(X_train_scaled, y_train):
     )
 
     optimal_params.fit(X_train_scaled, y_train)
+    st.write('Optimal Parameters determined by GridSearchCV:')
     st.write(optimal_params.best_params_)
     c = optimal_params.best_params_['C']
     gamma = optimal_params.best_params_['gamma']
     kernel = optimal_params.best_params_['kernel']
-
     return c, gamma, kernel
 
 def scree_plot(X_train_scaled):
@@ -107,10 +107,11 @@ def pca(X_train_scaled, X_test_scaled, y_train):
         verbose=0
     )
     optimal_params.fit(X_train_pca, y_train)
+    st.write('Optimal Parameters determined by GridSearchCV and PCA:')
+    st.write(optimal_params.best_params_)
     c = optimal_params.best_params_['C']
     gamma = optimal_params.best_params_['gamma']
     kernel = optimal_params.best_params_['kernel']
-   #st.write(optimal_params.best_params_)
     return c, gamma, kernel, X_train_pca, X_test_pca
 
 # ---------------------------------------------DISPLAY------------------------------------------------------------- #
@@ -133,6 +134,7 @@ def main():
     st.write("Read more about the parameters and SVC function here: https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html")
     basic_svm = SVC(random_state=30)
     basic_svm.fit(X_train_scaled,y_train)
+    st.write('Parameters used in the model:')
     st.write(basic_svm.get_params())
 
     # ---------------------------------------------METRICS------------------------------------------------------------- #
