@@ -26,7 +26,7 @@ def load_data():
 # Split the data
 
 def split_data(df):
-    features = ['mean radius', 'mean texture', 'mean perimeter', 'mean area', 'mean smoothness', 'mean compactness', 'mean concave points', 'mean symmetry', 'mean fractal dimension']
+    features = ['mean radius', 'mean texture', 'mean perimeter', 'mean area', 'mean smoothness', 'mean compactness', 'mean concave points', 'mean symmetry', 'mean fractal dimension', 'target']
     df = df[features]
     X = df.drop(['target'], axis=1)
     y = df['target']
