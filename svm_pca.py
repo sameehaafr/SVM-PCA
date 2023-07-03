@@ -34,7 +34,7 @@ def split_data(df):
     return X_train_scaled, X_test_scaled, y_train, y_test
 
 def build_svm(C, gamma, kernel, X_train_scaled, y_train):
-    svm = SVC(C=C, gamma=gamma, kernel=kernel, random_state=12)
+    svm = SVC(C=C, gamma=gamma, kernel=kernel, random_state=30)
     svm.fit(X_train_scaled,y_train)
     return svm
 
@@ -75,7 +75,7 @@ def find_best_params(X_train_scaled, y_train):
     return c, gamma, kernel
 
 def scree_plot(X_train_scaled):
-    pca = PCA(random_state=2).fit(X_train_scaled)
+    pca = PCA(n_components=3, random_state=30).fit(X_train_scaled)
     per_var = np.round(pca.explained_variance_ratio_ * 100, decimals=1)
 
     fig, ax = plt.subplots(figsize=(10, 10))
@@ -88,7 +88,7 @@ def scree_plot(X_train_scaled):
 
 # Build the model with the optimal parameters and the reduced number of features
 def pca(X_train_scaled, X_test_scaled, y_train):
-    pca = PCA(n_components=10, random_state=30).fit(X_train_scaled)
+    pca = PCA(n_components=3, random_state=30).fit(X_train_scaled)
 
     X_train_pca = pca.fit_transform(X_train_scaled)
     X_test_pca = pca.transform(X_test_scaled)
@@ -102,7 +102,7 @@ def pca(X_train_scaled, X_test_scaled, y_train):
     optimal_params = GridSearchCV(
         SVC(),
         param_grid,
-        cv=5,
+        cv=6,
         scoring='accuracy',
         verbose=0
     )
@@ -173,6 +173,7 @@ def main():
     c, gamma, kernel = find_best_params(X_train_scaled, y_train)
     st.caption('This returns: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
 
+    # ---------------------------------------------OPTIMAL MODEL------------------------------------------------------------- #
     opt_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train)
     accuracy = opt_svm.score(X_test_scaled, y_test)
     y_pred = opt_svm.predict(X_test_scaled)
@@ -181,15 +182,13 @@ def main():
     st.write("Recall: ", recall_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2)) 
     show_confusion_matrix(opt_svm, X_test_scaled, y_test)
 
-    # Plot Scree Plot - PCA to reduce the number of featuress
+    # ---------------------------------------------SCREE PLOT AND PCA------------------------------------------------------------- #
     st.header('Plotting Scree Plot - PCA to reduce the number of features')
-    #scree_plot = scree_plot(X_train_scaled) #returns scree plot
     fig = scree_plot(X_train_scaled)
     st.pyplot(fig)
-
     c, gamma, kernel, X_train_pca, X_test_pca = pca(X_train_scaled, X_test_scaled, y_train)
 
-    # Build the model with the optimal parameters and the reduced number of features
+    # ---------------------------------------------OPTIMAL MODEL WITH PCA------------------------------------------------------------- #
     st.caption('Optimal Parameters determined by PCA: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
     clf_svm_pca = build_svm(c, gamma, kernel, X_train_pca, y_train)
     accuracy = clf_svm_pca.score(X_test_pca, y_test)
@@ -198,28 +197,6 @@ def main():
     st.write("Accuracy:s ", accuracy.round(2))
     st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
     st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2))
-
-
-    # st.sidebar.title('Try it for yourself:')
-    # st.sidebar.subheader('Enter the values for the following features:')
-    # radius = st.sidebar.number_input('Radius', min_value=0.0, max_value=30.0, value=0.0, step=0.1)
-    # texture = st.sidebar.number_input('Texture', min_value=0.0, max_value=30.0, value=0.0, step=0.1)
-    # perimeter = st.sidebar.number_input('Perimeter', min_value=0.0, max_value=200.0, value=0.0, step=0.1)
-    # area = st.sidebar.number_input('Area', min_value=0.0, max_value=2000.0, value=0.0, step=0.1)
-    # smoothness = st.sidebar.number_input('Smoothness', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
-    # compactness = st.sidebar.number_input('Compactness', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
-    # concavity = st.sidebar.number_input('Concavity', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
-    # concave_points = st.sidebar.number_input('Concave Points', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
-    # symmetry = st.sidebar.number_input('Symmetry', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
-    # fractal_dimension = st.sidebar.number_input('Fractal Dimension', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
-    
-    # #st.sidebar.button(label = 'Submit')
-    # if(st.sidebar.button('Submit')):
-    #     prediction = clf_svm_pca.predict([[radius, texture, perimeter, area, smoothness, compactness, concavity, concave_points, symmetry, fractal_dimension]])
-    #     if prediction == 0:
-    #         st.sidebar.write('The tumor is: Malignant (Non-Cancerous)')
-    #     else:
-    #         st.sidebar.write('The tumor is: Benign (Cancerous)')
 
 if __name__ == '__main__':
     main()
