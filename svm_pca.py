@@ -198,5 +198,15 @@ def main():
     st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
     st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2))
 
+    st.write('w normal data')
+    svm1 = build_svm(c, gamma, kernel, X_train_scaled, y_train)
+    accuracy = clf_svm_pca.score(X_test_pca, y_test)
+    y_pred = clf_svm_pca.predict(X_test_pca)
+    class_names = ['Malignant', 'Benign']
+    st.write("Accuracy:s ", accuracy.round(2))
+    st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
+    st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2))
+
+
 if __name__ == '__main__':
     main()
