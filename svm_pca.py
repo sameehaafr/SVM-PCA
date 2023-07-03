@@ -116,12 +116,12 @@ def pca(X_train_scaled, X_test_scaled, y_train):
 def print_score(clf_svm, X_train_scaled, y_train):
     pred = clf_svm.predict(X_train_scaled)
     clf_report = pd.DataFrame(classification_report(y_train, pred, output_dict=True))
-    print("Train Result:n================================================")
-    print(f"Accuracy Score: {accuracy_score(y_train, pred) * 100:.2f}%")
-    print("_______________________________________________")
-    print(f"CLASSIFICATION REPORT:n{clf_report}")
-    print("_______________________________________________")
-    print(f"Confusion Matrix: n {confusion_matrix(y_train, pred)}n")
+    st.write("Train Result:n================================================")
+    st.write(f"Accuracy Score: {accuracy_score(y_train, pred) * 100:.2f}%")
+    st.write("_______________________________________________")
+    st.write(f"CLASSIFICATION REPORT:n{clf_report}")
+    st.write("_______________________________________________")
+    st.write(f"Confusion Matrix: n {confusion_matrix(y_train, pred)}n")
 
 # ---------------------------------------------DISPLAY------------------------------------------------------------- #
 
