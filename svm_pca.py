@@ -67,6 +67,7 @@ def find_best_params(X_train_scaled, y_train):
     )
 
     optimal_params.fit(X_train_scaled, y_train)
+    st.write(optimal_params.best_params_)
     c = optimal_params.best_params_['C']
     gamma = optimal_params.best_params_['gamma']
     kernel = optimal_params.best_params_['kernel']
