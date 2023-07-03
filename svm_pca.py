@@ -42,7 +42,7 @@ def build_svm(C, gamma, kernel, X_train_scaled, y_train):
 def show_confusion_matrix(clf_svm, X_test_scaled, y_test):
     class_labels = ['Malignant', 'Benign']
     cm = confusion_matrix(y_test, clf_svm.predict(X_test_scaled))
-    fig, ax = plt.subplots(figsize=(10, 10))
+    fig, ax = plt.subplots(figsize=(1, 3))
     sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False,
                 xticklabels=class_labels, yticklabels=class_labels, ax=ax)
     plt.xlabel("Predicted")
