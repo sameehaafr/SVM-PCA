@@ -112,7 +112,7 @@ def pca(X_train_scaled, X_test_scaled, y_train):
     c = optimal_params.best_params_['C']
     gamma = optimal_params.best_params_['gamma']
     kernel = optimal_params.best_params_['kernel']
-    return c, gamma, kernel, X_train_pca, X_test_pca
+    return c, gamma, kernel
 
 # ---------------------------------------------DISPLAY------------------------------------------------------------- #
 
