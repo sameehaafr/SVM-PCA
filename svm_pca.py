@@ -133,6 +133,7 @@ def main():
     st.write("Read more about the parameters and SVC function here: https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html")
     basic_svm = SVC(random_state=30)
     basic_svm.fit(X_train_scaled,y_train)
+    st.write(basic_svm.get_params())
 
     # ---------------------------------------------METRICS------------------------------------------------------------- #
     accuracy = basic_svm.score(X_test_scaled, y_test)
