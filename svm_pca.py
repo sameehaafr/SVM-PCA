@@ -34,9 +34,9 @@ def split_data(df):
     return X_train_scaled, X_test_scaled, y_train, y_test
 
 def build_svm(C, gamma, kernel, X_train_scaled, y_train):
-    clf_svm = SVC(C=C, gamma=gamma, kernel=kernel, random_state=30)
-    clf_svm.fit(X_train_scaled,y_train)
-    return clf_svm
+    svm = SVC(C=C, gamma=gamma, kernel=kernel, random_state=30)
+    svm.fit(X_train_scaled,y_train)
+    return svm
 
 # Evaluate the basic SVM model
 def show_confusion_matrix(clf_svm, X_test_scaled, y_test):
@@ -61,7 +61,7 @@ def find_best_params(X_train_scaled, y_train):
     optimal_params = GridSearchCV(
         SVC(),
         param_grid,
-        cv=5,
+        cv=6,
         scoring='accuracy',
         verbose=0
     )
@@ -134,7 +134,7 @@ def main():
     basic_svm = SVC(random_state=30)
     basic_svm.fit(X_train_scaled,y_train)
 
-    #st.subheader('Confusion Matrix and Metrics for Basic SVM Model')
+    # ---------------------------------------------METRICS------------------------------------------------------------- #
     accuracy = basic_svm.score(X_test_scaled, y_test)
     y_pred = basic_svm.predict(X_test_scaled)
     st.write("Accuracy: ", accuracy.round(2))
@@ -143,22 +143,40 @@ def main():
     show_confusion_matrix(basic_svm, X_test_scaled, y_test)
 
 
-    # Use GridSearchCV to find the best parameters
-    c, gamma, kernel = find_best_params(X_train_scaled, y_train)
+    # ---------------------------------------------GRIDSEARCHCV------------------------------------------------------------- #
+    st.header('Using GridSearchCV to find the best parameters')
+    st.code('''def find_best_params(X_train_scaled, y_train):
+    param_grid = [
+        {'C': [0.5, 1, 10, 100],
+        'gamma': ['scale', 1, 0.1, 0.01, 0.001, 0.0001],
+        'kernel': ['rbf']}
+        ]
 
-    # Build the model with the optimal parameters
-    st.header('SVM Model with Optimal Parameters')
-    st.caption('Optimal Parameters: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
+    optimal_params = GridSearchCV(
+        SVC(),
+        param_grid,
+        cv=6,
+        scoring='accuracy',
+        verbose=0
+    )
+
+    optimal_params.fit(X_train_scaled, y_train)
+    c = optimal_params.best_params_['C']
+    gamma = optimal_params.best_params_['gamma']
+    kernel = optimal_params.best_params_['kernel']
+
+    return c, gamma, kernel''')
+
+    c, gamma, kernel = find_best_params(X_train_scaled, y_train)
+    st.caption('This returns: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
+
     opt_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train)
-    st.subheader('Confusion Matrix and Metrics for SVM with Optimal Parameters')
     accuracy = opt_svm.score(X_test_scaled, y_test)
     y_pred = opt_svm.predict(X_test_scaled)
-    class_names = ['Malignant', 'Benign']
     st.write("Accuracy: ", accuracy.round(2))
-    st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
-    st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2)) 
+    st.write("Precision: ", precision_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2))
+    st.write("Recall: ", recall_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2)) 
     show_confusion_matrix(opt_svm, X_test_scaled, y_test)
-    accuracy = opt_svm.score(X_test_scaled, y_test)
 
     # Plot Scree Plot - PCA to reduce the number of featuress
     st.header('Plotting Scree Plot - PCA to reduce the number of features')
