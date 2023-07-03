@@ -129,8 +129,8 @@ def main():
 
     # ---------------------------------------------BASIC MODEL------------------------------------------------------------- #
     st.header('Basic SVM Model')
-    st.caption("Default SVM Parameters: C = 1.0, gamma = 'scale', kernel = 'rbf'")
-    st.caption("Read more about the parameters and SVC function here: https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html")
+    st.write("Default SVM Parameters: C = 1.0, gamma = 'scale', kernel = 'rbf'")
+    st.write("Read more about the parameters and SVC function here: https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html")
     basic_svm = SVC(random_state=30)
     basic_svm.fit(X_train_scaled,y_train)
 
