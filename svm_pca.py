@@ -88,7 +88,7 @@ def scree_plot(X_train_scaled):
 
 # Build the model with the optimal parameters and the reduced number of features
 def pca(X_train_scaled, X_test_scaled, y_train):
-    pca = PCA(n_components=8).fit(X_train_scaled)
+    pca = PCA(n_components=3).fit(X_train_scaled)
 
     X_train_pca = pca.fit_transform(X_train_scaled)
     X_test_pca = pca.transform(X_test_scaled)
