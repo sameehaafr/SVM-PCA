@@ -26,6 +26,8 @@ def load_data():
 # Split the data
 
 def split_data(df):
+    features = ['mean radius', 'mean texture', 'mean perimeter', 'mean area', 'mean smoothness', 'mean compactness', 'mean concave points', 'mean symmetry', 'mean fractal dimension']
+    df = df[features]
     X = df.drop(['target'], axis=1)
     y = df['target']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4)
@@ -74,7 +76,7 @@ def find_best_params(X_train_scaled, y_train):
     return c, gamma, kernel
 
 def scree_plot(X_train_scaled):
-    pca = PCA(random_state=30).fit(X_train_scaled)
+    pca = PCA(random_state=2).fit(X_train_scaled)
     per_var = np.round(pca.explained_variance_ratio_ * 100, decimals=1)
 
     fig, ax = plt.subplots(figsize=(10, 10))
