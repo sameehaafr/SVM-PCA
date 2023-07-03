@@ -28,7 +28,7 @@ def load_data():
 def split_data(df):
     X = df.drop(['target'], axis=1)
     y = df['target']
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
     X_train_scaled = scale(X_train)
     X_test_scaled = scale(X_test)
     return X_train_scaled, X_test_scaled, y_train, y_test
@@ -61,7 +61,7 @@ def find_best_params(X_train_scaled, y_train):
     optimal_params = GridSearchCV(
         SVC(),
         param_grid,
-        cv=6,
+        cv=5,
         scoring='accuracy',
         verbose=0
     )
@@ -75,7 +75,7 @@ def find_best_params(X_train_scaled, y_train):
     return c, gamma, kernel
 
 def scree_plot(X_train_scaled):
-    pca = PCA(random_state=30).fit(X_train_scaled)
+    pca = PCA().fit(X_train_scaled)
     per_var = np.round(pca.explained_variance_ratio_ * 100, decimals=1)
 
     fig, ax = plt.subplots(figsize=(10, 10))
@@ -88,7 +88,7 @@ def scree_plot(X_train_scaled):
 
 # Build the model with the optimal parameters and the reduced number of features
 def pca(X_train_scaled, X_test_scaled, y_train):
-    pca = PCA(n_components=4, random_state=30).fit(X_train_scaled)
+    pca = PCA(n_components=4).fit(X_train_scaled)
 
     X_train_pca = pca.fit_transform(X_train_scaled)
     X_test_pca = pca.transform(X_test_scaled)
@@ -102,7 +102,7 @@ def pca(X_train_scaled, X_test_scaled, y_train):
     optimal_params = GridSearchCV(
         SVC(),
         param_grid,
-        cv=6,
+        cv=5,
         scoring='accuracy',
         verbose=0
     )
