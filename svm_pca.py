@@ -186,22 +186,13 @@ def main():
     st.header('Plotting Scree Plot - PCA to reduce the number of features')
     fig = scree_plot(X_train_scaled)
     st.pyplot(fig)
-    c, gamma, kernel, X_train_pca, X_test_pca = pca(X_train_scaled, X_test_scaled, y_train)
+    c, gamma, kernel = pca(X_train_scaled, X_test_scaled, y_train)
 
     # ---------------------------------------------OPTIMAL MODEL WITH PCA------------------------------------------------------------- #
     st.caption('Optimal Parameters determined by PCA: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
-    clf_svm_pca = build_svm(c, gamma, kernel, X_train_pca, y_train)
-    accuracy = clf_svm_pca.score(X_test_pca, y_test)
-    y_pred = clf_svm_pca.predict(X_test_pca)
-    class_names = ['Malignant', 'Benign']
-    st.write("Accuracy:s ", accuracy.round(2))
-    st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
-    st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2))
-
-    st.write('w normal data')
-    svm1 = build_svm(c, gamma, kernel, X_train_scaled, y_train)
-    accuracy = svm1.score(X_test_scaled, y_test)
-    y_pred = svm1.predict(X_test_scaled)
+    clf_svm_pca= build_svm(c, gamma, kernel, X_train_scaled, y_train)
+    accuracy = clf_svm_pca.score(X_test_scaled, y_test)
+    y_pred = clf_svm_pca.predict(X_test_scaled)
     class_names = ['Malignant', 'Benign']
     st.write("Accuracy:s ", accuracy.round(2))
     st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
