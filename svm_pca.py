@@ -113,16 +113,6 @@ def pca(X_train_scaled, X_test_scaled, y_train):
 
     return c, gamma, kernel, X_train_pca, X_test_pca
 
-def print_score(clf_svm, X_train_scaled, y_train):
-    pred = clf_svm.predict(X_train_scaled)
-    clf_report = pd.DataFrame(classification_report(y_train, pred, output_dict=True))
-    st.write("Train Result:n================================================")
-    st.caption(f"Accuracy Score: {accuracy_score(y_train, pred) * 100:.2f}%")
-    st.write("_______________________________________________")
-    st.caption(f"CLASSIFICATION REPORT:n{clf_report}")
-    st.write("_______________________________________________")
-    st.caption(f"Confusion Matrix: n {confusion_matrix(y_train, pred)}n")
-
 # ---------------------------------------------DISPLAY------------------------------------------------------------- #
 
 
@@ -151,7 +141,6 @@ def main():
     st.write("Precision: ", precision_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2))
     st.write("Recall: ", recall_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2)) 
     show_confusion_matrix(basic_svm, X_test_scaled, y_test)
-    print_score(basic_svm, X_train_scaled, y_train)
 
 
     # Use GridSearchCV to find the best parameters
