@@ -106,12 +106,11 @@ def pca(X_train_scaled, X_test_scaled, y_train):
         scoring='accuracy',
         verbose=0
     )
-
+    st.write(optimal_params.best_params_)
     optimal_params.fit(X_train_pca, y_train)
     c = optimal_params.best_params_['C']
     gamma = optimal_params.best_params_['gamma']
     kernel = optimal_params.best_params_['kernel']
-
     return c, gamma, kernel, X_train_pca, X_test_pca
 
 # ---------------------------------------------DISPLAY------------------------------------------------------------- #
