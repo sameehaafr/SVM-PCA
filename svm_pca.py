@@ -75,7 +75,7 @@ def find_best_params(X_train_scaled, y_train):
     return c, gamma, kernel
 
 def scree_plot(X_train_scaled):
-    pca = PCA(n_components=3, random_state=30).fit(X_train_scaled)
+    pca = PCA(random_state=30).fit(X_train_scaled)
     per_var = np.round(pca.explained_variance_ratio_ * 100, decimals=1)
 
     fig, ax = plt.subplots(figsize=(10, 10))
