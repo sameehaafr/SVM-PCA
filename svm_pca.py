@@ -12,6 +12,8 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.decomposition import PCA
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics  import precision_score, recall_score
+from sklearn.metrics import accuracy_score, classification_report
+
 
 # Load the data
 
@@ -30,12 +32,6 @@ def split_data(df):
     X_train_scaled = scale(X_train)
     X_test_scaled = scale(X_test)
     return X_train_scaled, X_test_scaled, y_train, y_test
-
-# Build basic SVM model
-def build_basic_svm(X_train_scaled, y_train):
-    clf_svm = SVC(random_state=30)
-    clf_svm.fit(X_train_scaled,y_train)
-    return clf_svm
 
 def build_svm(C, gamma, kernel, X_train_scaled, y_train):
     clf_svm = SVC(C=C, gamma=gamma, kernel=kernel, random_state=30)
@@ -117,32 +113,45 @@ def pca(X_train_scaled, X_test_scaled, y_train):
 
     return c, gamma, kernel, X_train_pca, X_test_pca
 
+def print_score(clf_svm, X_train_scaled, y_train):
+    pred = clf_svm.predict(X_train_scaled)
+    clf_report = pd.DataFrame(classification_report(y_train, pred, output_dict=True))
+    print("Train Result:n================================================")
+    print(f"Accuracy Score: {accuracy_score(y_train, pred) * 100:.2f}%")
+    print("_______________________________________________")
+    print(f"CLASSIFICATION REPORT:n{clf_report}")
+    print("_______________________________________________")
+    print(f"Confusion Matrix: n {confusion_matrix(y_train, pred)}n")
+
 # ---------------------------------------------DISPLAY------------------------------------------------------------- #
 
 
 def main():   
+    # ---------------------------------------------INTRO------------------------------------------------------------- #
     st.title('SVM for Classifying Tumors')
     st.caption('The objective of this project is to build an SVM model that can classify tumor characteristics as either Malignant (non-cancerous) or Benign (cancerous). The data used for this project was obtained from the UC Irvine Machine Learning Repository: https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic')
     st.caption('The code for this project can be found here: https://github.com/sameehaafr/SVM-PCA')
 
-
+    # ---------------------------------------------DATA------------------------------------------------------------- #
     df = load_data()
     st.dataframe(df)
-
     X_train_scaled, X_test_scaled, y_train, y_test = split_data(df)
 
-    # Build basic SVM model
+    # ---------------------------------------------BASIC MODEL------------------------------------------------------------- #
     st.header('Basic SVM Model')
     st.caption("Default SVM Parameters: C = 1.0, gamma = 'scale', kernel = 'rbf'")
     st.caption("Read more about the parameters and SVC function here: https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html")
-    basic_svm = build_basic_svm(X_train_scaled, y_train)
-    st.subheader('Confusion Matrix and Metrics for Basic SVM Model')
+    basic_svm = SVC(random_state=30)
+    basic_svm.fit(X_train_scaled,y_train)
+
+    #st.subheader('Confusion Matrix and Metrics for Basic SVM Model')
     accuracy = basic_svm.score(X_test_scaled, y_test)
     y_pred = basic_svm.predict(X_test_scaled)
     st.write("Accuracy: ", accuracy.round(2))
     st.write("Precision: ", precision_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2))
     st.write("Recall: ", recall_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2)) 
     show_confusion_matrix(basic_svm, X_test_scaled, y_test)
+    print_score(basic_svm, X_train_scaled, y_train)
 
 
     # Use GridSearchCV to find the best parameters
@@ -181,26 +190,26 @@ def main():
     st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2))
 
 
-    st.sidebar.title('Try it for yourself:')
-    st.sidebar.subheader('Enter the values for the following features:')
-    radius = st.sidebar.number_input('Radius', min_value=0.0, max_value=30.0, value=0.0, step=0.1)
-    texture = st.sidebar.number_input('Texture', min_value=0.0, max_value=30.0, value=0.0, step=0.1)
-    perimeter = st.sidebar.number_input('Perimeter', min_value=0.0, max_value=200.0, value=0.0, step=0.1)
-    area = st.sidebar.number_input('Area', min_value=0.0, max_value=2000.0, value=0.0, step=0.1)
-    smoothness = st.sidebar.number_input('Smoothness', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
-    compactness = st.sidebar.number_input('Compactness', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
-    concavity = st.sidebar.number_input('Concavity', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
-    concave_points = st.sidebar.number_input('Concave Points', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
-    symmetry = st.sidebar.number_input('Symmetry', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
-    fractal_dimension = st.sidebar.number_input('Fractal Dimension', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
+    # st.sidebar.title('Try it for yourself:')
+    # st.sidebar.subheader('Enter the values for the following features:')
+    # radius = st.sidebar.number_input('Radius', min_value=0.0, max_value=30.0, value=0.0, step=0.1)
+    # texture = st.sidebar.number_input('Texture', min_value=0.0, max_value=30.0, value=0.0, step=0.1)
+    # perimeter = st.sidebar.number_input('Perimeter', min_value=0.0, max_value=200.0, value=0.0, step=0.1)
+    # area = st.sidebar.number_input('Area', min_value=0.0, max_value=2000.0, value=0.0, step=0.1)
+    # smoothness = st.sidebar.number_input('Smoothness', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
+    # compactness = st.sidebar.number_input('Compactness', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
+    # concavity = st.sidebar.number_input('Concavity', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
+    # concave_points = st.sidebar.number_input('Concave Points', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
+    # symmetry = st.sidebar.number_input('Symmetry', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
+    # fractal_dimension = st.sidebar.number_input('Fractal Dimension', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
     
-    #st.sidebar.button(label = 'Submit')
-    if(st.sidebar.button('Submit')):
-        prediction = clf_svm_pca.predict([[radius, texture, perimeter, area, smoothness, compactness, concavity, concave_points, symmetry, fractal_dimension]])
-        if prediction == 0:
-            st.sidebar.write('The tumor is: Malignant (Non-Cancerous)')
-        else:
-            st.sidebar.write('The tumor is: Benign (Cancerous)')
+    # #st.sidebar.button(label = 'Submit')
+    # if(st.sidebar.button('Submit')):
+    #     prediction = clf_svm_pca.predict([[radius, texture, perimeter, area, smoothness, compactness, concavity, concave_points, symmetry, fractal_dimension]])
+    #     if prediction == 0:
+    #         st.sidebar.write('The tumor is: Malignant (Non-Cancerous)')
+    #     else:
+    #         st.sidebar.write('The tumor is: Benign (Cancerous)')
 
 if __name__ == '__main__':
     main()
