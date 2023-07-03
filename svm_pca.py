@@ -42,7 +42,7 @@ def build_svm(C, gamma, kernel, X_train_scaled, y_train):
 def show_confusion_matrix(clf_svm, X_test_scaled, y_test):
     class_labels = ['Malignant', 'Benign']
     cm = confusion_matrix(y_test, clf_svm.predict(X_test_scaled))
-    fig, ax = plt.subplots(figsize=(5, 5))
+    fig, ax = plt.subplots(figsize=(3, 3))
     sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False,
                 xticklabels=class_labels, yticklabels=class_labels, ax=ax)
     plt.xlabel("Predicted")
@@ -77,7 +77,7 @@ def scree_plot(X_train_scaled):
     pca = PCA(random_state=30).fit(X_train_scaled)
     per_var = np.round(pca.explained_variance_ratio_ * 100, decimals=1)
 
-    fig, ax = plt.subplots(figsize=(5, 5))
+    fig, ax = plt.subplots(figsize=(3, 3))
     ax.bar(x=range(1, len(per_var) + 1), height=per_var)
     ax.set_ylabel('Percentage of Explained Variance')
     ax.set_xlabel('Principal Component')
