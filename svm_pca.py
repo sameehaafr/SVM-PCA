@@ -189,7 +189,6 @@ def main():
     c, gamma, kernel = pca(X_train_scaled, X_test_scaled, y_train)
 
     # ---------------------------------------------OPTIMAL MODEL WITH PCA------------------------------------------------------------- #
-    st.caption('Optimal Parameters determined by PCA: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
     clf_svm_pca= build_svm(c, gamma, kernel, X_train_scaled, y_train)
     accuracy = clf_svm_pca.score(X_test_scaled, y_test)
     y_pred = clf_svm_pca.predict(X_test_scaled)
