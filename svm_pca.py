@@ -34,7 +34,7 @@ def split_data(df):
     return X_train_scaled, X_test_scaled, y_train, y_test
 
 def build_svm(C, gamma, kernel, X_train_scaled, y_train):
-    svm = SVC(C=C, gamma=gamma, kernel=kernel, random_state=30)
+    svm = SVC(C=C, gamma=gamma, kernel=kernel, random_state=12)
     svm.fit(X_train_scaled,y_train)
     return svm
 
