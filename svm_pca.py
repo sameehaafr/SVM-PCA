@@ -19,15 +19,15 @@ from sklearn.metrics import accuracy_score, classification_report
 
 def load_data():
     tumor_df = load_breast_cancer()
+    features = ['mean radius', 'mean texture', 'mean perimeter', 'mean area', 'mean smoothness', 'mean compactness', 'mean concave points', 'mean symmetry', 'mean fractal dimension', 'target']
     df = pd.DataFrame(tumor_df.data, columns=tumor_df.feature_names)
+    df = df[features]
     df['target'] = tumor_df.target
     return df
 
 # Split the data
 
 def split_data(df):
-    features = ['mean radius', 'mean texture', 'mean perimeter', 'mean area', 'mean smoothness', 'mean compactness', 'mean concave points', 'mean symmetry', 'mean fractal dimension', 'target']
-    df = df[features]
     X = df.drop(['target'], axis=1)
     y = df['target']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4)
