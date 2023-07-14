@@ -215,7 +215,7 @@ def main():
     # ---------------------------------------------ABOUT ME------------------------------------------------------------- #
     st.markdown("#### Shameless Self-Promotion")
     st.caption("If you liked this project, checkout my other projects and some of my other media accounts below!")
-    st.caption("Website: https://sameehaafr.github.io/sameehaafr/ \n GitHub: https://github.com/sameehaafr \n LinkedIn: https://www.linkedin.com/in/sameeha-afrulbasha/ \n Medium: https://sameehaafr.medium.com/")
+    st.caption("Website: https://sameehaafr.github.io/sameehaafr/ \n\n\n GitHub: https://github.com/sameehaafr \n\n\n LinkedIn: https://www.linkedin.com/in/sameeha-afrulbasha/ \n\n\n Medium: https://sameehaafr.medium.com/")
 
     st.caption("Thanks for reading! :)")
 
