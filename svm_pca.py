@@ -186,6 +186,8 @@ def main():
     st.write("Accuracy: ", accuracy.round(2))
     st.write("Precision: ", precision_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2))
     st.write("Recall: ", recall_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2)) 
+    st.caption("As can be seen, the optimized SVM model performs SLIGHTLY better than the basic model. In other cases, you may be able to see a better improvement in performance if a larger dataset is used. In this case, the dataset is relatively small and the relations between the variables are clear, so the improvement is not as significant.")
+
     show_confusion_matrix(opt_svm, X_test_scaled, y_test)
 
     # ---------------------------------------------SCREE PLOT AND PCA------------------------------------------------------------- #
