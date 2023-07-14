@@ -118,7 +118,6 @@ def pca(X_train_scaled, X_test_scaled, y_train):
 
 
 def main():   
-    st.sidebar.markdown("[![Title]('https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg')]('www.linkedin.com/in/brian-f-rubin')")
     # ---------------------------------------------INTRO------------------------------------------------------------- #
     st.title('SVM for Classifying Tumors')
     st.caption('The code presented here demonstrates the use of Support Vector Machines (SVM) for classifying tumors as either Malignant or Benign. The objective of this project is to build a supervised SVM model that can accurately predict the nature of tumors based on their characteristics. The data used for this project is sourced from the UC Irvine Machine Learning Repository, specifically the Breast Cancer Wisconsin Diagnostic dataset (https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic). The code and implementation details can be found in the corresponding GitHub repository.')
@@ -212,6 +211,16 @@ def main():
     # ---------------------------------------------CONCLUSION------------------------------------------------------------- #
     st.header("Conclusion")
     st.caption("By following this code and implementing the described steps, one can effectively utilize SVM and PCA for tumor classification, achieving accurate predictions and potentially aiding in medical diagnoses.")
+
+    # ---------------------------------------------ABOUT ME------------------------------------------------------------- #
+    st.markdown("### Shameless Self-Promotion")
+    st.caption("If you liked this project, checkout my other projects and some of my other media accounts below!")
+    st.caption("Website: https://sameehaafr.github.io/sameehaafr/")
+    st.caption("GitHub: https://github.com/sameehaafr")
+    st.caption("LinkedIn: https://www.linkedin.com/in/sameeha-afrulbasha/")
+    st.caption("Medium: https://sameehaafr.medium.com/")
+
+    st.caption("Thanks for reading! :)")
 
 
 if __name__ == '__main__':
