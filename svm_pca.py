@@ -213,12 +213,9 @@ def main():
     st.caption("By following this code and implementing the described steps, one can effectively utilize SVM and PCA for tumor classification, achieving accurate predictions and potentially aiding in medical diagnoses.")
 
     # ---------------------------------------------ABOUT ME------------------------------------------------------------- #
-    st.markdown("### Shameless Self-Promotion")
+    st.markdown("#### Shameless Self-Promotion")
     st.caption("If you liked this project, checkout my other projects and some of my other media accounts below!")
-    st.caption("Website: https://sameehaafr.github.io/sameehaafr/")
-    st.caption("GitHub: https://github.com/sameehaafr")
-    st.caption("LinkedIn: https://www.linkedin.com/in/sameeha-afrulbasha/")
-    st.caption("Medium: https://sameehaafr.medium.com/")
+    st.caption("Website: https://sameehaafr.github.io/sameehaafr/ \n GitHub: https://github.com/sameehaafr \n LinkedIn: https://www.linkedin.com/in/sameeha-afrulbasha/ \n Medium: https://sameehaafr.medium.com/")
 
     st.caption("Thanks for reading! :)")
 
