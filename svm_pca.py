@@ -215,7 +215,7 @@ def main():
     # ---------------------------------------------ABOUT ME------------------------------------------------------------- #
     st.markdown("#### Shameless Self-Promotion")
     st.write("If you liked this project, checkout my other projects and some of my other media accounts below!")
-    st.write("Website: https://sameehaafr.github.io/sameehaafr/ \n\n\n GitHub: https://github.com/sameehaafr \n\n\n LinkedIn: https://www.linkedin.com/in/sameeha-afrulbasha/ \n\n\n Medium: https://sameehaafr.medium.com/")
+    st.write(":laptop: Website: https://sameehaafr.github.io/sameehaafr/ \n\n\n GitHub: https://github.com/sameehaafr \n\n\n LinkedIn: https://www.linkedin.com/in/sameeha-afrulbasha/ \n\n\n Medium: https://sameehaafr.medium.com/")
 
     st.write("Thanks for reading! :)")
 
