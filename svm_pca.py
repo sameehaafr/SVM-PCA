@@ -120,16 +120,19 @@ def pca(X_train_scaled, X_test_scaled, y_train):
 def main():   
     # ---------------------------------------------INTRO------------------------------------------------------------- #
     st.title('SVM for Classifying Tumors')
-    st.caption('The objective of this project is to build an SVM model that can classify tumor characteristics as either Malignant (non-cancerous) or Benign (cancerous). The data used for this project was obtained from the UC Irvine Machine Learning Repository: https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic')
-    st.caption('The code for this project can be found here: https://github.com/sameehaafr/SVM-PCA')
+    st.caption('The code presented here demonstrates the use of Support Vector Machines (SVM) for classifying tumors as either Malignant or Benign. The objective of this project is to build a supervised SVM model that can accurately predict the nature of tumors based on their characteristics. The data used for this project is sourced from the UC Irvine Machine Learning Repository, specifically the Breast Cancer Wisconsin Diagnostic dataset (https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic). The code and implementation details can be found in the corresponding GitHub repository.')
+    st.caption('GitHub: https://github.com/sameehaafr/SVM-PCA')
 
     # ---------------------------------------------DATA------------------------------------------------------------- #
+    st.header('Data Loading and Preprocessing')
+    st.caption('The first step in the code involves loading the dataset and performing some initial data exploration. The breast cancer dataset is loaded using the scikit-learn librarys "load_breast_cancer" function, which provides a preprocessed and labeled dataset. The data is then organized into a pandas DataFrame for ease of manipulation and analysis. The DataFrame displays the tumor characteristics along with the corresponding target labels, which indicate whether the tumor is Malignant or Benign.')
     df = load_data()
     st.dataframe(df)
     X_train_scaled, X_test_scaled, y_train, y_test = split_data(df)
 
     # ---------------------------------------------BASIC MODEL------------------------------------------------------------- #
     st.header('Basic SVM Model')
+    st.caption('The code proceeds to build a basic SVM model using default parameters. The SVM model is created using the scikit-learn librarys "SVC" class, with random_state set for reproducibility. The model is trained on the scaled training data. The accuracy, precision, and recall scores of the model are evaluated and displayed, along with a confusion matrix that illustrates the performance of the model in predicting tumor types.')
     st.write("Default SVM Parameters: C = 1.0, gamma = 'scale', kernel = 'rbf'")
     st.write("Read more about the parameters and SVC function here: https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html")
     basic_svm = SVC(random_state=30)
@@ -147,7 +150,8 @@ def main():
 
 
     # ---------------------------------------------GRIDSEARCHCV------------------------------------------------------------- #
-    st.header('Using GridSearchCV to find the best parameters')
+    st.header('Parameter Tuning with GridSearchCV')
+    st.caption("To improve the performance of the SVM model, the code utilizes the GridSearchCV class from scikit-learn. GridSearchCV systematically searches through a specified parameter grid and performs cross-validation to identify the optimal combination of parameters. In this case, the parameters being tuned are C (regularization parameter), gamma (kernel coefficient), and kernel type. The best parameters determined by GridSearchCV are displayed, and the optimal SVM model is built using these parameters.")
     st.code('''def find_best_params(X_train_scaled, y_train):
     param_grid = [
         {'C': [0.5, 1, 10, 100],
@@ -174,6 +178,8 @@ def main():
     st.caption('This returns: C = {}, gamma = {}, kernel = {}'.format(c, gamma, kernel))
 
     # ---------------------------------------------OPTIMAL MODEL------------------------------------------------------------- #
+    st.header("Evaluation of Optimal SVM Model")
+    st.caption("The code evaluates the performance of the optimal SVM model on the test dataset. The accuracy, precision, and recall scores are calculated and displayed. Additionally, a confusion matrix is generated to provide a visual representation of the model's performance.")
     opt_svm = build_svm(c, gamma, kernel, X_train_scaled, y_train)
     accuracy = opt_svm.score(X_test_scaled, y_test)
     y_pred = opt_svm.predict(X_test_scaled)
@@ -183,12 +189,15 @@ def main():
     show_confusion_matrix(opt_svm, X_test_scaled, y_test)
 
     # ---------------------------------------------SCREE PLOT AND PCA------------------------------------------------------------- #
-    st.header('Plotting Scree Plot - PCA to reduce the number of features')
+    st.header("Principal Component Analysis (PCA")
+    st.caption("In an attempt to reduce the number of features and improve the model's efficiency, the code utilizes Principal Component Analysis (PCA). PCA transforms the original features into a new set of uncorrelated variables, called principal components. The code generates a scree plot, which illustrates the explained variance ratio for each principal component. This plot helps determine the number of components to retain.")
     fig = scree_plot(X_train_scaled)
     st.pyplot(fig)
     c, gamma, kernel = pca(X_train_scaled, X_test_scaled, y_train)
 
     # ---------------------------------------------OPTIMAL MODEL WITH PCA------------------------------------------------------------- #
+    st.header("Optimal Model with PCA")
+    st.caption("Finally, the optimal SVM model is built using the PCA-transformed data. The same process of parameter tuning with GridSearchCV is applied, this time using the reduced number of features. The performance of the optimized SVM model with PCA is evaluated, and the accuracy, precision, and recall scores are displayed.")
     clf_svm_pca= build_svm(c, gamma, kernel, X_train_scaled, y_train)
     accuracy = clf_svm_pca.score(X_test_scaled, y_test)
     y_pred = clf_svm_pca.predict(X_test_scaled)
@@ -196,6 +205,10 @@ def main():
     st.write("Accuracy:s ", accuracy.round(2))
     st.write("Precision: ", precision_score(y_test, y_pred, labels=class_names).round(2))
     st.write("Recall: ", recall_score(y_test, y_pred, labels=class_names).round(2))
+
+    # ---------------------------------------------CONCLUSION------------------------------------------------------------- #
+    st.header("Conclusion")
+    st.caption("By following this code and implementing the described steps, one can effectively utilize SVM and PCA for tumor classification, achieving accurate predictions and potentially aiding in medical diagnoses.")
 
 
 if __name__ == '__main__':
