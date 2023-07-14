@@ -118,6 +118,7 @@ def pca(X_train_scaled, X_test_scaled, y_train):
 
 
 def main():   
+    st.sidebar.markdown("[![Title]('https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg')]('www.linkedin.com/in/brian-f-rubin')")
     # ---------------------------------------------INTRO------------------------------------------------------------- #
     st.title('SVM for Classifying Tumors')
     st.caption('The code presented here demonstrates the use of Support Vector Machines (SVM) for classifying tumors as either Malignant or Benign. The objective of this project is to build a supervised SVM model that can accurately predict the nature of tumors based on their characteristics. The data used for this project is sourced from the UC Irvine Machine Learning Repository, specifically the Breast Cancer Wisconsin Diagnostic dataset (https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic). The code and implementation details can be found in the corresponding GitHub repository.')
