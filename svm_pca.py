@@ -218,7 +218,7 @@ def main():
 
     # ---------------------------------------------OPTIMAL MODEL WITH PCA------------------------------------------------------------- #
     st.header("Optimal Model with PCA")
-    st.markdown("Finally, the optimal SVM model is built using the PCA-transformed data. The same process of parameter tuning with GridSearchCV is applied, this time using the reduced number of features. The performance of the optimized SVM model with PCA is evaluated, and the accuracy, precision, and recall scores are displayed.")
+    st.markdown("Finally, the optimal SVM model is built using the PCA-transformed data. The same process of parameter tuning with GridSearchCV is applied, this time using the reduced number of features. Here's the performance of the optimized SVM model with PCA:")
     clf_svm_pca= build_svm(c, gamma, kernel, X_train_scaled, y_train)
     accuracy = clf_svm_pca.score(X_test_scaled, y_test)
     y_pred = clf_svm_pca.predict(X_test_scaled)
