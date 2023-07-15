@@ -161,7 +161,7 @@ def main():
     y_pred = basic_svm.predict(X_test_scaled)
     st.write("Accuracy: ", accuracy.round(2))
     st.write("Precision: ", precision_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2))
-    st.write("Recall: ", recall_score(y_test, y_prsed, labels=['Malignant', 'Benign']).round(2)) 
+    st.write("Recall: ", recall_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2)) 
 
     st.write("[Understanding the Confusion Matrix](https://sameehaafr.notion.site/Understanding-Confusion-Matrix-94e06c56f84f4abfb4644a59fd3b2c3f?pvs=4)")
     show_confusion_matrix(basic_svm, X_test_scaled, y_test)
