@@ -117,8 +117,6 @@ def pca(X_train_scaled, X_test_scaled, y_train):
 # ---------------------------------------------DISPLAY------------------------------------------------------------- #
 # Create a sidebar
 st.sidebar.title("About Me")
-#image = Image.open('IMG_9670_1_6.png')
-#st.sidebar.image(image)
 st.sidebar.write("I'm Sameeha Afrulbasha! I'm an undergraduate student studying Data Science, Statistics, and Math at Purdue University. Feel free to checkout my website and other media accounts below!")
 
 st.sidebar.markdown('Website: \n\n\n https://sameehaafr.github.io/sameehaafr/')
