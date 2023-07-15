@@ -117,20 +117,14 @@ def pca(X_train_scaled, X_test_scaled, y_train):
 # ---------------------------------------------DISPLAY------------------------------------------------------------- #
 # Create a sidebar
 st.sidebar.title("About Me")
+#image = Image.open('IMG_9670_1_6.png')
+#st.sidebar.image(image)
 st.sidebar.write("I'm Sameeha Afrulbasha! I'm an undergraduate student studying Data Science, Statistics, and Math at Purdue University. Feel free to checkout my website and other media accounts below!")
 
-def open_link(url):
-    js_code = f"window.open('{url}')"
-    st.write(f"<script>{js_code}</script>", unsafe_allow_html=True)
-
-if st.sidebar.button("My Website"):
-    open_link("https://sameehaafr.github.io/sameehaafr/")
-if st.sidebar.button("GitHub"):
-    open_link("https://github.com/sameehaafr")
-if st.sidebar.button("LinkedIn"):
-    open_link("https://www.linkedin.com/in/sameeha-afrulbasha/")
-if st.sidebar.button("Medium"):
-    open_link("https://sameehaafr.medium.com/")
+st.sidebar.markdown('Website: \n\n\n https://sameehaafr.github.io/sameehaafr/')
+st.sidebar.markdown('GitHub: \n\n\n https://github.com/sameehaafr')
+st.sidebar.markdown('LinkedIn: \n\n\n https://www.linkedin.com/in/sameeha-afrulbasha/')
+st.sidebar.markdown('Medium: \n\n\n https://sameehaafr.medium.com/')
 
 
 def main():   
