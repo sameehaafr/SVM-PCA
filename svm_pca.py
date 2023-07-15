@@ -170,6 +170,7 @@ def main():
     # ---------------------------------------------GRIDSEARCHCV------------------------------------------------------------- #
     st.header('Parameter Tuning with GridSearchCV')
     st.markdown("To improve the performance of the SVM model, the code utilizes the GridSearchCV class from scikit-learn. GridSearchCV systematically searches through a specified parameter grid and performs cross-validation to identify the optimal combination of parameters. In this case, the parameters being tuned are C (regularization parameter), gamma (kernel coefficient), and kernel type. The best parameters determined by GridSearchCV are displayed, and the optimal SVM model is built using these parameters.")
+    st.markdown("[Parameter Meanings](https://sameehaafr.notion.site/SVM-Parameter-Meanings-71b46acf73a047368eb27b8420d7663c?pvs=4)")
     st.code('''def find_best_params(X_train_scaled, y_train):
     param_grid = [
         {'C': [0.5, 1, 10, 100],
