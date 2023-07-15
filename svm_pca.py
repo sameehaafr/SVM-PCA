@@ -137,8 +137,8 @@ def main():
     # ---------------------------------------------INTRO------------------------------------------------------------- #
     st.title('SVM for Classifying Tumors')
     st.markdown('In this article, we will be building a Support Vector Machine(SVM) for classifying tumors as either Malignant or Benign. The data used for this project is sourced from the [UC Irvine Machine Learning Repository](https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic), specifically the Breast Cancer Wisconsin Diagnostic dataset. The code and implementation details can be found in the corresponding [GitHub Repository](https://github.com/sameehaafr/SVM-PCA).')
-    st.markdown("<b>Category</b>: Supervised Machine Learning")
-    st.markdown("<b>Objective:</b> Build a supervised SVM model that can accurately predict the nature of tumors based on their characteristics.")
+    st.markdown("<b>Category</b>: Supervised Machine Learning", unsafe_allow_html=True)
+    st.markdown("<b>Objective:</b> Build a supervised SVM model that can accurately predict the nature of tumors based on their characteristics.", unsafe_allow_html=True)
 
     # ---------------------------------------------DATA------------------------------------------------------------- #
     st.header('Data Loading and Preprocessing')
@@ -161,7 +161,9 @@ def main():
     y_pred = basic_svm.predict(X_test_scaled)
     st.write("Accuracy: ", accuracy.round(2))
     st.write("Precision: ", precision_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2))
-    st.write("Recall: ", recall_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2)) 
+    st.write("Recall: ", recall_score(y_test, y_prsed, labels=['Malignant', 'Benign']).round(2)) 
+
+    st.write("[Understanding the Confusion Matrix](https://sameehaafr.notion.site/Understanding-Confusion-Matrix-94e06c56f84f4abfb4644a59fd3b2c3f?pvs=4)")
     show_confusion_matrix(basic_svm, X_test_scaled, y_test)
 
 
