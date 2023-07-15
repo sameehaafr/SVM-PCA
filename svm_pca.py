@@ -205,13 +205,13 @@ def main():
     st.write("Accuracy: ", accuracy.round(2))
     st.write("Precision: ", precision_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2))
     st.write("Recall: ", recall_score(y_test, y_pred, labels=['Malignant', 'Benign']).round(2)) 
-    st.markdown("As can be seen, the optimized SVM model performs SLIGHTLY better than the basic model. In other cases, you may be able to see a better improvement in performance if a larger dataset is used. In this case, the dataset is relatively small and the relations between the variables are clear (as seen through data analysis), so the improvement is not as significant.")
+    st.markdown("As can be seen, the optimized SVM model performs SLIGHTLY better than the basic model. In other cases, you may be able to see a better improvement in performance if a larger dataset is used. In this case, the dataset is relatively small and the relations between the variables are clear (when basic data analysis is done), so the improvement is not as significant.")
 
     show_confusion_matrix(opt_svm, X_test_scaled, y_test)
 
     # ---------------------------------------------SCREE PLOT AND PCA------------------------------------------------------------- #
-    st.header("Principal Component Analysis (PCA")
-    st.markdown("In an attempt to reduce the number of features and improve the model's efficiency, the code utilizes Principal Component Analysis (PCA). PCA transforms the original features into a new set of uncorrelated variables, called principal components. The code generates a scree plot, which illustrates the explained variance ratio for each principal component. This plot helps determine the number of components to retain.")
+    st.header("Principal Component Analysis (PCA)")
+    st.markdown("Principal Component Analysis (PCA) is a dimensionality reduction technique used to transform a high-dimensional dataset into a lower-dimensional representation while preserving its essential information. PCA transforms the original features into a new set of uncorrelated variables, called principal components. The principal components are ordered in terms of their importance, where the first principal component captures the maximum variance in the data, and subsequent components capture decreasing amounts of variance. The code generates a scree plot, which illustrates the explained variance ratio for each principal component. This plot helps determine the number of components to retain.")
     fig = scree_plot(X_train_scaled)
     st.pyplot(fig)
     c, gamma, kernel = pca(X_train_scaled, X_test_scaled, y_train)
